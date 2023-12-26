@@ -20,15 +20,15 @@ export const printHourDiv = () => {
 
 
 export const weekCreator = [{
-    type: 'subtract',
-    number: 3
-}, {type: 'subtract', number: 2}, {
-    type: 'subtract',
-    number: 1
-}, {type: 'add', number: 0},
-    {type: 'add', number: 1},
-    {type: 'add', number: 2},
-    {type: 'add', number: 3}]
+    type: 'add',
+    number: 0
+}, {type: 'add', number: 1}, {
+    type: 'add',
+    number: 2
+}, {type: 'add', number: 3},
+    {type: 'add', number: 4},
+    {type: 'add', number: 5},
+    {type: 'add', number: 6}]
 export const twoDayCreator = [
     {type: 'add', number: 0},
     {type: 'add', number: 1},

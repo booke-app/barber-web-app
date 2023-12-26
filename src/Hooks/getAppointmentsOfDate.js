@@ -40,7 +40,7 @@ export const getAppointmentsOfDate = (index, indexOfWorkerThatTheDayRepresents) 
 
 
     useEffect(() => {
-        console.log(workerOfThisDateAndIndex, 'workerOfThisDateAndIndex')
+
         let arr = []
         appointments?.map(appointment => {
             if (dayjs(dayjs(selectedDate).add(index, "d")).isSame(dayjs(appointment.dateAndTime.when), 'd') && dayjs(dayjs(selectedDate).add(index, "d")).isSame(dayjs(appointment.dateAndTime.endsAt), 'd') &&
@@ -50,7 +50,14 @@ export const getAppointmentsOfDate = (index, indexOfWorkerThatTheDayRepresents) 
             }
         })
         setAppointmentsOfDate(arr)
-    }, [workerOfThisDateAndIndex]);
+
+        if(arr.length>4){
+            console.log(workerOfThisDateAndIndex, 'workerOfThisDateAndIndex')
+            console.log(indexOfWorkerThatTheDayRepresents,'indexOfWorkerThatTheDayRepresents')
+            console.log(index,'index')
+console.log(arr,'appointemtns')
+        }
+    }, [workerOfThisDateAndIndex,selectedDate]);
 
     return appointmentsOfDate
 }

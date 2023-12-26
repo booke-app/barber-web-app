@@ -81,7 +81,7 @@ const DesktopNavigationSideBar = ({urls}) => {
                                     className="h-8 w-8 text-gray-300"
                                     aria-hidden="true"/> :
                                 <img
-
+                                    style={{objectFit:"cover"}}
                                     className="h-8 w-8 rounded-full bg-indigo-700"
                                     src={personalInfo.profilePhotoUrl}
                                     alt=""

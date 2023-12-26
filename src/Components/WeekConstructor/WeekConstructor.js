@@ -12,7 +12,7 @@ import {
 const WeekConstructor = () => {
     return (<>
             {Object.keys(indexOfDays).map((dayName, index) =>
-                <Day key={index} index={index}/>)}
+                <Day key={index} indexOfWorkerThatTheDayRepresents={0} index={index}/>)}
         </>
 
     )

@@ -3,16 +3,12 @@ import {styles} from './styles'
 
 const Appointment = ({appointment}) => {
     return (
-        <div
-            style={{
-                paddingLeft: '2px',
-                paddingRight: '2px'
-            }}>
+        <div>
             <div
-                className={'  cursor-pointer  absolute  flex flex-col overflow-y-hidden rounded-lg bg-blue-50 p-2 text-xs leading-5 hover:bg-blue-100'}
+                className={'  cursor-pointer w-full absolute  flex flex-col overflow-y-hidden rounded-lg bg-blue-50 p-2 text-xs leading-5 hover:bg-blue-100'}
 
                 style={{
-                    width: 'calc(calc(100% ) -4px) ',
+
                     top: `${(dayjs(appointment.dateAndTime.when).format("HH") * 120) + (
                         dayjs(appointment.dateAndTime.when).format('mm') < 15 ? 0 :
                             (dayjs(appointment.dateAndTime.when).format('mm') >= 15
