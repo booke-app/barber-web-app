@@ -63,6 +63,8 @@ export default function ServicesPage() {
         <div className="px-4 sm:px-6 lg:px-8">
             <SimpleAlertWithActions open={isModalVisible}
                                     setOpen={setIsModalVisible}
+                                    title={'Remove service'}
+                                    message={'Are you sure you want to delete this service? This action cannot be undone.'}
                                     onAccept={() => {
                                         removeService()
                                         setServiceToBeDeleted(null)

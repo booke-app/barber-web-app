@@ -10,12 +10,14 @@ export default function SimpleAlertWithActions({
                                                    setOpen,
                                                    message,
                                                    onAccept,
-                                                   onCancel
+    title,
+                                                   onCancel,
+
                                                }) {
     // const [open, setOpen] = useState(true)
 
     return (
-        <Transition.Root show={open} as={Fragment}>
+        <Transition.Root show={!!open} as={Fragment}>
             <Dialog as="div" className="relative z-10"
                     onClose={setOpen}>
                 <Transition.Child
@@ -73,18 +75,12 @@ export default function SimpleAlertWithActions({
                                         <Dialog.Title
                                             as="h3"
                                             className="text-base font-semibold leading-6 text-gray-900">
-                                            Remove service
+                                            {title}
                                         </Dialog.Title>
                                         <div
                                             className="mt-2">
                                             <p className="text-sm text-gray-500">
-                                                Are you sure
-                                                you want to
-                                                delete this
-                                                service?This
-                                                action
-                                                cannot be
-                                                undone.
+                                                {message}
                                             </p>
                                         </div>
                                     </div>

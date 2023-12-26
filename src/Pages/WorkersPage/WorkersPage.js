@@ -59,6 +59,8 @@ export default function WorkersPage() {
         <div className="px-4 sm:px-6 lg:px-8">
             <SimpleAlertWithActions open={isModalVisible}
                                     setOpen={setIsModalVisible}
+                                    title={'Remove worker'}
+                                    message={'Are you sure you want to delete this worker? This action cannot be undone.'}
                                     onAccept={() => {
                                         deleteWorker()
                                         setWorkerToBeDeleted(null)

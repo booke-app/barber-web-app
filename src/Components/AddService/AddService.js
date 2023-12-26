@@ -107,31 +107,33 @@ const AddService = ({onCancel}) => {
                             </div>
 
                         </div>
-                        <div className="sm:col-span-3">
+                        <div className={'sm:col-span-3'}>
                             <label htmlFor="price"
-                                   className="block text-sm font-medium leading-6 text-gray-900">
-                                Price (€)
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    value={servicePrice}
-
-                                    onChange={(e) => {
-                                        setServicePrice(e.target.value)
-                                    }}
-                                    type="number"
-                                    required={true}
-                                    name="price"
-                                    pattern={` ^[1-9][0-9]*$`}
-
-                                    id="price"
-                                    className="peer block pl-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                />
-                                <span
-                                    className="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                                     Please enter a valid price
-                                </span>
+                                   className="block text-sm font-medium leading-6 text-gray-900">Price</label>
+                            <div
+                                className="relative mt-2 ">
+                                <div
+                                    className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                                    <span
+                                        className="text-gray-500 sm:text-sm">€</span>
+                                </div>
+                                <input type="number"
+                                       onChange={(e)=>{setServicePrice(e.target.value)}}
+                                       pattern={` ^[1-9][0-9]*$`}
+                                       name="price"
+                                       required={true}
+                                       id="price"
+                                       className="block peer w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                       />
+                                <div
+                                    className="absolute inset-y-0 h-full right-0 flex items-center">
+                                    <span id="currency"
+                                          className="h-full flex items-center rounded-md border-0 bg-transparent py-0 pl-2 pr-7 text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm">
+                                        EUR
+                                    </span>
+                                </div>
                             </div>
+
                         </div>
                     </div>
                 </div>

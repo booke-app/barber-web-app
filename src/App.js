@@ -127,21 +127,23 @@ function App() {
 
     useEffect(() => {
         if (isLoggedIn) {
-            setInterval(() => {
-
+           let interval =  setInterval(() => {
                 if (accessToken) {
                     let isValid = isJwtTokenValid(accessToken)
                     if (!isValid) {
                         dispatch(logout())
-
+                         localStorage.removeItem('accessToken')
                         dispatch(setModalContent({
                             message: 'Your connection timed out, please log in again',
                             status: 500
                         }))
+                        clearInterval(interval)
+
                     }
 
 
                 }
+
             }, 5000)
         }
     }, []);
