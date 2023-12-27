@@ -3,13 +3,15 @@ import {Fragment, useState} from "react";
 import {XMarkIcon} from "@heroicons/react/24/outline";
 import {Link} from "react-router-dom";
 import {classNames} from "../../Utilities/utilities";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {
     logout
 } from "../../Features/authorizeUser/authorizeUser-slice";
 import {
     ArrowRightEndOnRectangleIcon
 } from "@heroicons/react/16/solid";
+import GoogleLogoutButton
+    from "../GoogleLogoutButton/GoogleLogoutButton";
 
 const MobileNavigationSideBar = ({
                                      urls,
@@ -17,6 +19,7 @@ const MobileNavigationSideBar = ({
                                      setSidebarOpen
                                  }) => {
     const dispatch = useDispatch()
+    const isUserLoggedInUsingOAuth2 = useSelector(state => state.authorizeUser.isUserLoggedInUsingOAuth2)
     return (
         <Transition.Root show={sidebarOpen} as={Fragment}>
             <Dialog as="div"
@@ -107,24 +110,28 @@ const MobileNavigationSideBar = ({
                                                         </span>
                                                     </Link>
                                                 ))}
-                                                <li
-                                                    onClick={() => {
-                                                        dispatch(logout())
-                                                    }}
-                                                    className={classNames(
-                                                        'cursor-pointer text-indigo-200 hover:text-white hover:bg-indigo-700',
-                                                        'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
-                                                    )}
-                                                >
-                                                    <ArrowRightEndOnRectangleIcon
+                                                {!isUserLoggedInUsingOAuth2 ?
+                                                    <li
+                                                        onClick={() => {
+                                                            dispatch(logout())
+                                                        }}
                                                         className={classNames(
-                                                            'text-indigo-200 group-hover:text-white',
-                                                            'h-6 w-6 shrink-0'
+                                                            'cursor-pointer text-indigo-200 hover:text-white hover:bg-indigo-700',
+                                                            'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
                                                         )}
-                                                        aria-hidden="true"
-                                                    />
-                                                    Logout
-                                                </li>
+                                                    >
+                                                        <ArrowRightEndOnRectangleIcon
+                                                            className={classNames(
+                                                                'text-indigo-200 group-hover:text-white',
+                                                                'h-6 w-6 shrink-0'
+                                                            )}
+                                                            aria-hidden="true"
+                                                        />
+                                                        Logout
+                                                    </li>
+                                                    :
+                                                    <GoogleLogoutButton/>}
+
 
                                             </ul>
                                         </li>

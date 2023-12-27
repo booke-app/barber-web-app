@@ -18,6 +18,7 @@ export const printHourDiv = () => {
     return hourDivs
 }
 
+export const clientId = '430690229215-4v527q5hk52q3fnh2qe3tcqfib1vkkoo.apps.googleusercontent.com'
 
 export const weekCreator = [{
     type: 'add',

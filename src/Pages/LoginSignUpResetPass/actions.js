@@ -4,10 +4,16 @@ export const resetPassword = async (email) => {
     return request('/forgot-password', {email}, null, 'POST')
 
 }
-export const registerFunction = async (firstName, email, password, lastName) => {
+export const registerFunction = async (firstName, email, password, lastName, isFromOAuth2) => {
     let response
     try {
-        response = await request('/createUser', {firstName, email, password, lastName,}, null, 'POST')
+        response = await request('/createUser', {
+            firstName,
+            email,
+            password,
+            lastName,
+            isFromOAuth2
+        }, null, 'POST')
         console.log(response)
         return response
     } catch (e) {

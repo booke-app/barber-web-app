@@ -1,4 +1,7 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {
+    createAsyncThunk,
+    createSlice
+} from "@reduxjs/toolkit";
 import {request} from "../../Utilities/Request";
 
 const initialState = {
@@ -6,6 +9,7 @@ const initialState = {
     status: null,
     isLoading: false,
     userData: {},
+    isUserLoggedInUsingOAuth2: false,
     shop: {
         settings: {
             shifts: {
@@ -33,7 +37,10 @@ const initialState = {
 export const login = createAsyncThunk('authorizeUser/login', async (payload) => {
 
     return await request(`/login`, {
-        email: payload.email, password: payload.password
+        email: payload.email,
+        password: payload.password,
+        isFromOAuth2: payload.isFromOAuth2,
+        tokenId: payload.tokenId
     }, null, 'POST')
 })
 export const getShop = createAsyncThunk('authorizeUser/getShop', async (payload) => {
@@ -53,6 +60,7 @@ const authorisedSlice = createSlice({
         },
         logout(state, action) {
             state.isLoggedIn = false;
+            state.isUserLoggedInUsingOAuth2 = false
             localStorage.removeItem('accessToken')
         },
         setUpdatedAppointments(state, action) {
@@ -83,6 +91,9 @@ const authorisedSlice = createSlice({
                 state.isLoggedIn = true
                 state.status = 'success'
                 state.isLoading = false
+                if (action.payload.isFromOAuth2) {
+                    state.isUserLoggedInUsingOAuth2 = true
+                }
                 state.userData = action?.payload?.userData
                 if (action.payload?.shop) {
                     state.shop = action.payload?.shop

@@ -20,6 +20,8 @@ import {registerFunction, resetPassword} from "./actions";
 import {
     setModalContent
 } from "../../Features/modal/modal-slice";
+import OAuthGoogle
+    from "../../Components/OAuthGoogle/OAuthGoogle";
 
 const LoginSignUpResetPass = () => {
 
@@ -145,6 +147,9 @@ const LoginSignUpResetPass = () => {
                 }
 
             </div>
+            {(whichTypeOfActionDoesUserWantToDo === loginText || whichTypeOfActionDoesUserWantToDo === register) &&
+                <OAuthGoogle
+                    type={whichTypeOfActionDoesUserWantToDo === loginText ? 'login' : 'register'}/>}
             <Button fullWidth={true}
                     onClick={() => {
 

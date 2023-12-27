@@ -51,6 +51,8 @@ import {UserCircleIcon} from "@heroicons/react/24/solid";
 import {
     setModalContent
 } from "./Features/modal/modal-slice";
+import {clientId} from "./Utilities/utilities";
+import {gapi} from "gapi-script";
 
 const urls = [{
     name: 'Calendar',
@@ -99,8 +101,11 @@ function App() {
     }
 
     useEffect(() => {
-        navigation('/calendar')
-    }, []);
+        if (isLoggedIn && window.location.pathname === '/') {
+            navigation('/calendar')
+        }
+
+    }, [isLoggedIn]);
 
     useEffect(() => {
             setInterval(() => {
@@ -126,13 +131,23 @@ function App() {
 
 
     useEffect(() => {
+        function start() {
+            gapi.client.init({
+                    clientId: clientId,
+                    scope: 'openid'
+                }
+            )
+        }
+
+        gapi.load('client:auth2', start
+        )
         if (isLoggedIn) {
-           let interval =  setInterval(() => {
+            let interval = setInterval(() => {
                 if (accessToken) {
                     let isValid = isJwtTokenValid(accessToken)
                     if (!isValid) {
                         dispatch(logout())
-                         localStorage.removeItem('accessToken')
+                        localStorage.removeItem('accessToken')
                         dispatch(setModalContent({
                             message: 'Your connection timed out, please log in again',
                             status: 500
