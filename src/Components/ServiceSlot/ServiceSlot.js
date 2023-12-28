@@ -5,8 +5,12 @@ import {DeleteOutlined} from "@mui/icons-material";
 import {motion} from "framer-motion";
 import {deleteService} from "./actions";
 import {useDispatch, useSelector} from "react-redux";
-import {setUpdatedServices} from "../../Features/authorizeUser/authorizeUser-slice";
-import {setModalContent} from "../../Features/modal/modal-slice";
+import {
+    setUpdateCategoriesWithItsServices
+} from "../../Features/authorizeUser/authorizeUser-slice";
+import {
+    setModalContent
+} from "../../Features/modal/modal-slice";
 
 const ServiceSlot = ({data}) => {
     const shopId = useSelector(state => state.authorizeUser.shop._id)
@@ -14,14 +18,23 @@ const ServiceSlot = ({data}) => {
     const dispatch = useDispatch()
     const removeService = async () => {
         try {
-            const res = await deleteService({shopId, serviceId: data._id})
+            const res = await deleteService({
+                shopId,
+                serviceId: data._id
+            })
             if (res) {
-                dispatch(setUpdatedServices(res))
-                dispatch(setModalContent({message: 'Service was deleted successfully', status: 200}))
+                dispatch(setUpdateCategoriesWithItsServices(res))
+                dispatch(setModalContent({
+                    message: 'Service was deleted successfully',
+                    status: 200
+                }))
 
             }
         } catch (e) {
-            dispatch(setModalContent({message: 'Service was not deleted successfully', status: 500}))
+            dispatch(setModalContent({
+                message: 'Service was not deleted successfully',
+                status: 500
+            }))
 
         }
 
@@ -32,14 +45,18 @@ const ServiceSlot = ({data}) => {
                  onMouseEnter={() => {
                      setIsSelected(true)
                  }} style={styles.wrapper}>
-        <div style={styles.innerDiv}><p style={styles.title}>Type:</p> {data.name}</div>
-        <div style={styles.innerDiv}><p style={styles.title}>Duration:</p> {data.duration} minutes</div>
+        <div style={styles.innerDiv}><p
+            style={styles.title}>Type:</p> {data.name}</div>
+        <div style={styles.innerDiv}><p
+            style={styles.title}>Duration:</p> {data.duration} minutes
+        </div>
         <motion.div onClick={() => {
 
             removeService()
 
         }} transition={{duration: 0.3}}
-                    animate={{opacity: isSelected ? 1 : 0}} style={styles.deleteButton}>
+                    animate={{opacity: isSelected ? 1 : 0}}
+                    style={styles.deleteButton}>
             <Icon><DeleteOutlined
                 style={{color: 'white'}}/></Icon>
         </motion.div>

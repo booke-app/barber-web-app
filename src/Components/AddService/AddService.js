@@ -1,32 +1,59 @@
 import {useDispatch, useSelector} from "react-redux";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {addService} from "./actions";
 import {
-    setUpdatedServices
+    setUpdateCategoriesWithItsServices
 } from "../../Features/authorizeUser/authorizeUser-slice";
 import {
     setModalContent
 } from "../../Features/modal/modal-slice";
+import SelectSex from "../SelectSex/SelectSex";
+import WorkersToManageAServiceSelector
+    from "../WorkersToManageAServiceSelector/WorkersToManageAServiceSelector";
+import CategoryOfTheServiceSelector
+    from "../CategoryOfTheServiceSelector/CategoryOfTheServiceSelector";
 
 
 const AddService = ({onCancel}) => {
     const [serviceName, setServiceName] = useState('')
     const [duration, setDuration] = useState(0)
     const [servicePrice, setServicePrice] = useState(0)
+
+    const [selectedSex, setSelectedSex] = useState({
+        id: 1,
+        name: 'Both'
+    })
+    const [selectedServiceCategory, setSelectedServiceCategory] = useState({})
+    const workers = useSelector(state => state.authorizeUser?.shop?.workers)
+    const [selectedWorkers, setSelectedWorkers] = useState([{...workers?.[0]}])
+    const [idsOfSelectedWorkers, setIdsOfSelectedWorkers] = useState([])
     const shopId = useSelector(state => state.authorizeUser.shop._id)
     const dispatch = useDispatch()
+
+
+    useEffect(() => {
+        let arr = []
+
+        selectedWorkers?.map(worker => {
+            arr.push(worker._id)
+        })
+        setIdsOfSelectedWorkers(arr)
+    }, [selectedWorkers]);
     const createService = async () => {
         try {
             const response = await addService({
                 shopId,
+                categoryId: selectedServiceCategory._id,
                 service: {
                     name: serviceName,
                     duration: parseInt(duration),
-                    price: servicePrice
+                    price: servicePrice,
+                    sex: selectedSex.name,
+                    idsOfWorkersWhoCanHandleTheService: idsOfSelectedWorkers,
                 }
             })
             if (response.length > 0) {
-                dispatch(setUpdatedServices(response));
+                dispatch(setUpdateCategoriesWithItsServices(response));
                 dispatch(setModalContent({
                     message: 'Service was added successfully',
                     status: 200
@@ -118,13 +145,15 @@ const AddService = ({onCancel}) => {
                                         className="text-gray-500 sm:text-sm">€</span>
                                 </div>
                                 <input type="number"
-                                       onChange={(e)=>{setServicePrice(e.target.value)}}
+                                       onChange={(e) => {
+                                           setServicePrice(e.target.value)
+                                       }}
                                        pattern={` ^[1-9][0-9]*$`}
                                        name="price"
                                        required={true}
                                        id="price"
                                        className="block peer w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                       />
+                                />
                                 <div
                                     className="absolute inset-y-0 h-full right-0 flex items-center">
                                     <span id="currency"
@@ -133,6 +162,29 @@ const AddService = ({onCancel}) => {
                                     </span>
                                 </div>
                             </div>
+
+                        </div>
+                        <div className="sm:col-span-3">
+
+                            <SelectSex
+                                selectedSex={selectedSex}
+                                setSelectedSex={setSelectedSex}/>
+
+                        </div>
+                        <div className="sm:col-span-3">
+
+                            <WorkersToManageAServiceSelector
+                                selectedWorkers={selectedWorkers}
+                                setSelectedWorkers={setSelectedWorkers}
+                            />
+
+                        </div>
+                        <div className="sm:col-span-3">
+
+                            <CategoryOfTheServiceSelector
+                                selectedServiceCategory={selectedServiceCategory}
+                                setSelectedServiceCategory={setSelectedServiceCategory}
+                            />
 
                         </div>
                     </div>

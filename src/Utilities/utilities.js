@@ -58,9 +58,8 @@ const uploadSingleImage = async (base64, place) => {
             image: base64,
             place
         }, null, 'POST')
-        console.log(res)
     } catch (e) {
-        console.log(e)
+        throw new Error(e)
     }
 
 

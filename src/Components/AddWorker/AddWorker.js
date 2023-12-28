@@ -19,6 +19,7 @@ export default function AddWorker({onCancel}) {
     const [email, setEmail] = useState('')
     const [phone, setPhone] = useState('')
     const [password, setPassword] = useState('')
+    const [title, setTitle] = useState('')
     const [imageBase64, setImageBase64] = useState('')
     const dispatch = useDispatch()
     const createWorker = async () => {
@@ -29,7 +30,8 @@ export default function AddWorker({onCancel}) {
                 email,
                 phone,
                 password,
-                profilePicBase64: imageBase64
+                profilePicBase64: imageBase64,
+                title,
             })
             dispatch(setUpdatedWorkers(response))
             dispatch(setModalContent({
@@ -166,7 +168,7 @@ export default function AddWorker({onCancel}) {
                             </div>
                         </div>
 
-                        <div className="sm:col-span-4">
+                        <div className="sm:col-span-3">
                             <label htmlFor="email"
                                    className="block text-sm font-medium leading-6 text-gray-900">
                                 Email address
@@ -188,6 +190,31 @@ export default function AddWorker({onCancel}) {
                                 <span
                                     className="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
                                      Please enter a valid email (ex. best@bookingapp.com)
+                                </span>
+                            </div>
+                        </div>
+                        <div className="sm:col-span-3">
+                            <label htmlFor="Title"
+                                   className="block text-sm font-medium leading-6 text-gray-900">
+                                Title
+                            </label>
+                            <div className="mt-2">
+                                <input
+                                    onChange={(e) => {
+                                        setTitle(e.target.value)
+                                    }}
+                                    required={true}
+                                    //Minimum eight characters, at least one letter and one number:
+                                    pattern={`^[a-zA-Z]+$`}
+                                    type="text"
+                                    name="text"
+                                    id="text"
+                                    autoComplete="text"
+                                    className="peer block pl-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                />
+                                <span
+                                    className="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                                     Please enter a title
                                 </span>
                             </div>
                         </div>

@@ -69,8 +69,9 @@ const authorisedSlice = createSlice({
         },
         setUpdatedWorkers(state, action) {
             state.shop.workers = [...action.payload]
-        }, setUpdatedServices(state, action) {
-            state.shop.services = [...action.payload]
+        },
+        setUpdateCategoriesWithItsServices(state, action) {
+            state.shop.categoriesWithItsServices = [...action.payload]
         },
         setUpdatedShifts(state, action) {
             state.shop.settings.shifts = action.payload
@@ -126,7 +127,7 @@ const authorisedSlice = createSlice({
 
 
 export const {
-    setUpdatedServices,
+    setUpdateCategoriesWithItsServices,
     setUpdatedWorkers,
     setUpdatedAppointments,
     manualLogin, logout,

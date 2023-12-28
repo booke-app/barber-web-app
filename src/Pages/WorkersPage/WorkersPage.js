@@ -116,6 +116,11 @@ export default function WorkersPage() {
                                 </th>
 
                                 <th scope="col"
+                                    className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">
+                                    Title
+                                </th>
+
+                                <th scope="col"
                                     className="relative py-3.5 pl-3 pr-4 sm:pr-3">
                                     <span
                                         className="sr-only ">Delete</span>
@@ -144,6 +149,7 @@ export default function WorkersPage() {
                                         {worker.firstName + " " + worker.lastName}
                                     </td>
                                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{worker.email}</td>
+                                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{worker.title ? worker.title : '-'}</td>
                                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
                                         <a onClick={() => {
                                             setWorkerToBeDeleted(worker)
