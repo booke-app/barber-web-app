@@ -17,6 +17,8 @@ import {
 import SimpleAlertWithActions
     from "../../Components/SimpleAlertWithActions/SimpleAlertWithActions";
 import {UserCircleIcon} from "@heroicons/react/24/solid";
+import EditWorker
+    from "../../Components/EditWorker/EditWorker";
 
 
 export default function WorkersPage() {
@@ -25,6 +27,7 @@ export default function WorkersPage() {
     const [isAddWorkerShown, setIsAddWorkerShown] = useState(false)
     const dispatch = useDispatch()
     const [workerToBeDeleted, setWorkerToBeDeleted] = useState(null)
+    const [workerToBeEdited, setWorkerToBeEdited] = useState(null)
     const deleteWorker = async () => {
         try {
             const res = await removeWorker(workerToBeDeleted)
@@ -89,9 +92,15 @@ export default function WorkersPage() {
                 </div>}
             </div>
             {isAddWorkerShown &&
-                <AddWorker worker onCancel={() => {
+                <AddWorker onCancel={() => {
                     setIsAddWorkerShown(false)
                 }}/>}
+            {workerToBeEdited &&
+                <EditWorker
+                    workerToBeEdited={workerToBeEdited}
+                    onCancel={() => {
+                        setWorkerToBeEdited(null)
+                    }}/>}
 
             <div className="mt-8 flow-root">
                 <div
@@ -125,6 +134,11 @@ export default function WorkersPage() {
                                     <span
                                         className="sr-only ">Delete</span>
                                 </th>
+                                <th scope="col"
+                                    className="relative py-3.5 pl-3 pr-4 sm:pr-3">
+                                    <span
+                                        className="sr-only ">Edit</span>
+                                </th>
                             </tr>
                             </thead>
                             <tbody className="bg-white">
@@ -157,6 +171,14 @@ export default function WorkersPage() {
                                            className="cursor-pointer text-red-600 hover:text-indigo-900">
                                             Delete<span
                                             className="sr-only">, {worker.name}</span>
+                                        </a>
+                                    </td>
+                                    <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
+                                        <a onClick={() => {
+                                            setWorkerToBeEdited(worker)
+                                        }}
+                                           className="cursor-pointer text-indigo-600 hover:text-indigo-900">
+                                            Edit
                                         </a>
                                     </td>
                                 </tr>

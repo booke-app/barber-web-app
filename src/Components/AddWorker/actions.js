@@ -6,6 +6,7 @@ import {request} from "../../Utilities/Request";
 //   email
 //   phone
 //   password
+//base64
 export const addWorker = async (payload) => {
     try {
         const response = await request('/create-worker', payload, null, 'POST')

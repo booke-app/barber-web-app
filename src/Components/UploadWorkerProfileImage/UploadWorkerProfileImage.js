@@ -7,7 +7,8 @@ import {useDispatch, useSelector} from "react-redux";
 
 const UploadWorkerProfileImage = ({
                                       setImageBase64,
-                                      imageBase64
+                                      imageBase64,
+                                      imgUrl
                                   }) => {
 
     const dispatch = useDispatch()
@@ -19,7 +20,7 @@ const UploadWorkerProfileImage = ({
             </label>
             <div
                 className="mt-2 flex items-center gap-x-3">
-                {!imageBase64 ?
+                {(!imageBase64 && !imgUrl) ?
                     <UserCircleIcon
                         className="h-12 w-12 text-gray-300"
                         aria-hidden="true"/> :
@@ -29,7 +30,7 @@ const UploadWorkerProfileImage = ({
                             objectFit: 'cover'
                         }}
                         className="h-12 w-12 rounded-full bg-indigo-700"
-                        src={`${imageBase64}`}
+                        src={`${imageBase64 ? imageBase64 : imgUrl} `}
                         alt=""
                     />}
                 <label htmlFor="file-upload"
@@ -38,7 +39,6 @@ const UploadWorkerProfileImage = ({
                         onChange={async (e) => {
                             try {
                                 const result = await convertBase64(e.target.files?.[0])
-                                console.log(result, 'base64')
                                 setImageBase64(result)
                             } catch (e) {
                                 console.log(e)
