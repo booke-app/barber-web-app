@@ -59,7 +59,7 @@ export const dayConstructor = (selectedDate, index) => {
                 // console.log(startOfShiftHour, ':startOfShiftHour', endOfShiftHour, ':endOfShiftHour', hour, ':hour')
 
                 if (parseInt(hour) < startOfShiftHour) {
-                    console.log('i deactivate@start<smaller', hour, startOfShiftHour)
+                    // console.log('i deactivate@start<smaller', hour, startOfShiftHour)
                     dayToReturn[hour] = {
                         startMinuteOfInactiveSlot: 0,
                         endMinuteOfInactiveSlot: 59,
@@ -96,7 +96,7 @@ export const dayConstructor = (selectedDate, index) => {
 
                 }
                 if (parseInt(hour) > endOfShiftHour) {
-                    console.log('i deactivate@start>bigger', hour, endOfShiftHour)
+                    // console.log('i deactivate@start>bigger', hour, endOfShiftHour)
 
 
                     dayToReturn[hour] = {

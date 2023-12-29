@@ -2,14 +2,18 @@ import styles from "./styles";
 import {Alert, AlertTitle} from "@mui/material";
 import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {toggleVisibilityOfModal} from "../../Features/modal/modal-slice";
+import {
+    toggleVisibilityOfModal
+} from "../../Features/modal/modal-slice";
 
 
 import {Fragment, useState} from 'react'
 import {Transition} from '@headlessui/react'
 import {CheckCircleIcon} from '@heroicons/react/24/outline'
 import {XMarkIcon} from '@heroicons/react/20/solid'
-import {ExclamationCircleIcon} from "@heroicons/react/16/solid";
+import {
+    ExclamationCircleIcon
+} from "@heroicons/react/16/solid";
 
 export default function AlertComponent() {
     const show = useSelector(state => state.modal.isVisible)
@@ -29,9 +33,10 @@ export default function AlertComponent() {
             {/* Global notification live region, render this permanently at the end of the document */}
             <div
                 aria-live="assertive"
-                className="pointer-events-none fixed inset-0 mt-14 flex items-end px-4 py-6  sm:items-start sm:p-6"
+                className="pointer-events-none fixed inset-0 mt-14 flex z-10 items-end px-4 py-6  sm:items-start sm:p-6"
             >
-                <div className="flex w-full flex-col items-center space-y-4 sm:items-end">
+                <div
+                    className="flex w-full flex-col items-center space-y-4 sm:items-end">
                     {/* Notification panel, dynamically insert this into the live region when it needs to be displayed */}
                     <Transition
                         show={show}
@@ -46,18 +51,26 @@ export default function AlertComponent() {
                         <div
                             className="pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
                             <div className="p-4 ">
-                                <div className="flex items-start">
-                                    <div className="flex-shrink-0">
+                                <div
+                                    className="flex items-start">
+                                    <div
+                                        className="flex-shrink-0">
                                         {modalContent.status === 200 &&
-                                            <CheckCircleIcon className="h-6 w-6 text-green-400" aria-hidden="true"/>
+                                            <CheckCircleIcon
+                                                className="h-6 w-6 text-green-400"
+                                                aria-hidden="true"/>
                                         } {modalContent.status === 500 &&
-                                        <ExclamationCircleIcon className="h-6 w-6 text-red-400" aria-hidden="true"/>
+                                        <ExclamationCircleIcon
+                                            className="h-6 w-6 text-red-400"
+                                            aria-hidden="true"/>
                                     }                                    </div>
-                                    <div className="ml-3 w-0 flex-1 pt-0.5">
+                                    <div
+                                        className="ml-3 w-0 flex-1 pt-0.5">
                                         <p className="text-sm font-medium text-gray-900">  {modalContent.message}</p>
                                         <p className="mt-1 text-sm text-gray-500">{modalContent.status === 200 ? 'Success' : 'Error'}</p>
                                     </div>
-                                    <div className="ml-4 flex flex-shrink-0">
+                                    <div
+                                        className="ml-4 flex flex-shrink-0">
                                         <button
                                             type="button"
                                             className="inline-flex rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
@@ -65,8 +78,11 @@ export default function AlertComponent() {
                                                 dispatch(toggleVisibilityOfModal(false))
                                             }}
                                         >
-                                            <span className="sr-only">Close</span>
-                                            <XMarkIcon className="h-5 w-5" aria-hidden="true"/>
+                                            <span
+                                                className="sr-only">Close</span>
+                                            <XMarkIcon
+                                                className="h-5 w-5"
+                                                aria-hidden="true"/>
                                         </button>
                                     </div>
                                 </div>

@@ -23,6 +23,8 @@ import AddServiceCategory
     from "../../Components/AddServiceCategory/AddServiceCategory";
 import {UserCircleIcon} from "@heroicons/react/24/solid";
 import {Tooltip} from "@mui/material";
+import EditService
+    from "../../Components/EditService/EditService";
 
 
 export default function ServicesPage() {
@@ -34,6 +36,7 @@ export default function ServicesPage() {
     const [isAddCategoryShown, setIsAddCategoryShown] = useState(false)
     const dispatch = useDispatch()
     const [serviceToBeDeleted, setServiceToBeDeleted] = useState(null)
+    const [serviceToBeEdited, setServiceToBeEdited] = useState(null)
     const workers = useSelector(state => state.authorizeUser.shop.workers)
     const removeService = async () => {
         try {
@@ -71,9 +74,9 @@ export default function ServicesPage() {
 
     }, [serviceToBeDeleted]);
     useEffect(() => {
+        let servicesArr = []
         categoriesWithItsServices?.map(categoryWithEachServices => {
-            let servicesArr = []
-            categoryWithEachServices.services.map(service => {
+            categoryWithEachServices.services?.map(service => {
                 servicesArr.push({
                     ...service,
                     categoryName: categoryWithEachServices.categoryName,
@@ -84,6 +87,7 @@ export default function ServicesPage() {
 
         })
     }, [categoriesWithItsServices]);
+
 
     return (
         <div className="px-4 sm:px-6 lg:px-8">
@@ -117,6 +121,12 @@ export default function ServicesPage() {
                 <AddService onCancel={() => {
                     setIsAddServiceShown(false)
                 }}/>}
+            {serviceToBeEdited &&
+                <EditService
+                    selectedServiceToBeEdited={serviceToBeEdited}
+                    onCancel={() => {
+                        setServiceToBeEdited(null)
+                    }}/>}
             {isAddCategoryShown &&
                 <AddServiceCategory onCancel={() => {
                     setIsAddCategoryShown(false)
@@ -162,6 +172,11 @@ export default function ServicesPage() {
                                     <span
                                         className="sr-only ">Delete</span>
                                 </th>
+                                <th scope="col"
+                                    className="relative py-3.5 pl-3 pr-4 sm:pr-3">
+                                    <span
+                                        className="sr-only ">Edit</span>
+                                </th>
                             </tr>
                             </thead>
                             <tbody className="bg-white">
@@ -204,8 +219,15 @@ export default function ServicesPage() {
                                             setServiceToBeDeleted(service)
                                         }}
                                            className="cursor-pointer text-red-600 hover:text-indigo-900">
-                                            Delete<span
-                                            className="sr-only">, {service.price}</span>
+                                            Delete
+                                        </a>
+                                    </td>
+                                    <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
+                                        <a onClick={() => {
+                                            setServiceToBeEdited(service)
+                                        }}
+                                           className="cursor-pointer text-indigo-600 hover:text-indigo-900">
+                                            Edit
                                         </a>
                                     </td>
                                 </tr>

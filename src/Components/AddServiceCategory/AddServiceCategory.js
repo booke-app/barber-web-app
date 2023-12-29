@@ -36,9 +36,7 @@ const AddServiceCategory = ({onCancel}) => {
 
     }
     return (
-        <form method="post"
-              noValidate
-              onSubmit={() => false}>
+        <>
             <div className="mt-14 space-y-12">
 
                 <div
@@ -100,7 +98,7 @@ const AddServiceCategory = ({onCancel}) => {
                     Save
                 </button>
             </div>
-        </form>
+        </>
     )
 
 }

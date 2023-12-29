@@ -65,6 +65,25 @@ const uploadSingleImage = async (base64, place) => {
 
 }
 
+export const doTwoArraysContainTheSameValues = (array1, array2) => {
+    let areTheArraysTheSame = true
+    if (array1.length !== array2.length) {
+        areTheArraysTheSame = false
+        return areTheArraysTheSame
+    }
+
+    array1.map(arrItem => {
+        if (array2.filter(arr2Item => arr2Item === arrItem).length === 0) {
+            areTheArraysTheSame = false
+            return areTheArraysTheSame
+        }
+
+    })
+    return areTheArraysTheSame
+
+}
+
+
 export const convertBase64 = (file) => {
     return new Promise((resolve, reject) => {
         const fileReader = new FileReader();

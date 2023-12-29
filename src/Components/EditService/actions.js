@@ -1,8 +1,8 @@
 import {request} from "../../Utilities/Request";
 
-export const addCategory = async (payload) => {
+export const editService = async (payload) => {
     try {
-        const res = await request('/create-category', payload, null, 'POST')
+        const res = await request('/edit-service', payload, null, 'POST')
         return res.data.categoriesWithItsServices
     } catch (e) {
         throw new Error(e)
