@@ -1,47 +1,65 @@
 import {styles} from "./styles";
 import {Button, Icon, Tooltip} from "@mui/material";
-import {AddOutlined, DeleteOutlined} from "@mui/icons-material";
+import {
+    AddOutlined,
+    DeleteOutlined
+} from "@mui/icons-material";
 import Shift from "../Shift/Shift";
-import RightOfPageEditShift from "../RightOfPageEditShift/RightOfPageEditShift";
-import {useState} from "react";
+import {
+    PlusIcon,
+    XMarkIcon
+} from '@heroicons/react/24/outline'
+import {classNames} from "../../Utilities/utilities";
 
-const DayAndHour = ({setAllWeeksShiftObject, allWeekShiftsObject, day}) => {
+const DayAndHour = ({
+                        setAllWeeksShiftObject,
+                        allWeekShiftsObject,
+                        day
+                    }) => {
     const doesDayHaveShifts = allWeekShiftsObject[day].shifts.length > 0
+
     return (
-        <div style={styles.day}><span style={{
-            borderBottomWidth: 1, borderBottomColor: "black", borderBottomStyle: "solid",
-            fontWeight: 800,
-            marginBottom: '5px', minWidth: '100px', padding: '5px 20px,', wordWrap: 'wrap'
-        }}>{day}</span>
+        <div
+            style={styles.day}
+        >
+            <span
+                style={{
+                    fontSize: '14px',
+                    minWidth: '100px'
 
-
-            {allWeekShiftsObject[day].shifts.length > 0 && allWeekShiftsObject[day]?.shifts?.map((shift, i) => (
-                <Shift day={day} index={i} key={i} shift={allWeekShiftsObject?.[day].shifts?.[i]}
-                       allWeeksShifts={allWeekShiftsObject} setAllWeeksShiftObject={setAllWeeksShiftObject}/>
-
-            ))}
-
-            <div style={styles.iconDiv}>
+                }}
+                className={'text-base sm:flex sm:items-center font-semibold leading-7  text-gray-900'}>{day}
+            </span>
+            {!doesDayHaveShifts &&
                 <Tooltip title={'Add Shift'}>
-                    <Icon sx={styles.addIcon} onClick={() => {
-                        const newAllWeekShiftsObject = {...allWeekShiftsObject}
-                        newAllWeekShiftsObject[day].shifts = [...newAllWeekShiftsObject[day].shifts, {
-                            from: null,
-                            to: null
-                        }]
-                        setAllWeeksShiftObject(newAllWeekShiftsObject)
-                    }}><AddOutlined/>
-                    </Icon>
-                </Tooltip>
-                {doesDayHaveShifts && <Tooltip title={'Delete Shift'}>
-                    <Icon sx={styles.addIcon} onClick={() => {
-                        let newArr = {...allWeekShiftsObject}
-                        newArr[day].shifts?.splice(-1, 1)
-                        setAllWeeksShiftObject(newArr)
+                    <PlusIcon style={{justifySelf: "start"}}
+                              onClick={() => {
+                                  const newAllWeekShiftsObject = {...allWeekShiftsObject}
+                                  newAllWeekShiftsObject[day].shifts = [...newAllWeekShiftsObject[day].shifts, {
+                                      from: null,
+                                      to: null
+                                  }]
+                                  setAllWeeksShiftObject(newAllWeekShiftsObject)
+                              }}
+                              className={classNames(
+                                  'text-white rounded bg-indigo-600 hover:bg-indigo-500 h-6 w-6 shrink-0 '
+                              )}/>
+                </Tooltip>}
 
-                    }}><DeleteOutlined/>
-                    < /Icon></Tooltip>}
-            </div>
+            <div style={{
+                display: "flex",
+                flexDirection: "column",
+                flexWrap: "wrap",
+                width: '100%',
+            }}>
+                {allWeekShiftsObject[day].shifts.length > 0 && allWeekShiftsObject[day]?.shifts?.map((shift, i) => (
+                    <Shift day={day} index={i} key={i}
+                           shift={allWeekShiftsObject?.[day].shifts?.[i]}
+                           allWeeksShifts={allWeekShiftsObject}
+                           setAllWeeksShiftObject={setAllWeeksShiftObject}/>
+
+                ))}</div>
+
 
         </div>
     )

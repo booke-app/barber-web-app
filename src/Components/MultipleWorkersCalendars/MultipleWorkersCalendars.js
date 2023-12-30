@@ -81,7 +81,11 @@ const MultipleWorkersCalendars = () => {
                 <div
                     className="flex flex-auto flex-col overflow-auto">
                     <WeekNavigator
-                        typeOfNavigator={currentTypeOfView === 'twoDayView' ? '2Day' : currentTypeOfView === 'threeDayView' ? '3Day' : 'week'}
+                        typeOfNavigator={currentTypeOfView === 'twoDayView'
+                            ? '2Day'
+                            : currentTypeOfView === 'threeDayView'
+                                ? '3Day' : currentTypeOfView === 'dayView' ? '1Day' :
+                                    'week'}
                     />
                     <div
                         className="flex w-full flex-auto content-center items-center justify-between">

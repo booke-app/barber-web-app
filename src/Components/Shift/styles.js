@@ -6,23 +6,34 @@ const {createStyles} = require("@mui/styles");
 export const styles = createStyles(
     {
         wrapper: {
-            margin: "5px 5px",
-            padding: '10px 5px',
-            width: '100px',
-            backgroundColor: theme.palette.primary.main,
-            boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px',
-            borderRadius: '10px',
+            alignItems: "center",
+            margin: "5px 0px",
+            padding: '5px 0px',
+            width: '100%',
             display: "flex",
-            flexDirection: "column",
-            cursor: "pointer"
+            flexDirection: "row",
+            justifyContent: "space-evenly",
+            cursor: "pointer",
 
         },
         timePicker: {
             margin: '5px 0',
             minWidth: '200px'
         },
-        span: {
-            color: "white",
-            fontWeight: "bold",
+   
+        text: {
+            margin: '0 5px',
+            alignItems: "center",
+            display: "flex",
+            textAlign: "center",
+            fontWeight: "bold"
+        },
+        iconDiv: {
+            display: "flex",
+            marginTop: '2px',
+            marginLeft: '10px',
+            flexDirection: "row",
+            justifyContent: "space-evenly",
+
         }
     })

@@ -111,6 +111,31 @@ export const uploadImage = async (event, place) => {
     }
 };
 
+
+export const hoursInDayArrayConstructor = () => {
+    let hours = 24
+    let arr = []
+    for (let i = 0; i < hours; i++) {
+        arr.push(i < 10 ? "0" + i : i)
+    }
+
+
+    return arr
+
+}
+export const minutesInHourArrayConstructor = () => {
+    let hours = 60
+    let arr = []
+    for (let i = 0; i !== hours; i++) {
+        arr.push(i < 10 ? "0" + i : i)
+    }
+
+
+    return arr
+
+}
+
+
 export const isDateGivenTheSameOrBetweenTwoDateObjects = (dateWeWantToCompare, firstDateObject, secondDateObject) => {
     if ((dayjs(firstDateObject).isSame(dayjs(dateWeWantToCompare), 'minutes') || dayjs(secondDateObject).isSame(dayjs(dateWeWantToCompare), 'minutes') ||
         dayjs(dateWeWantToCompare).isBetween(dayjs(firstDateObject), dayjs(secondDateObject), 'minutes'))) {
