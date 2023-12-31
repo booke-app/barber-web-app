@@ -51,7 +51,10 @@ const EditService = ({
         setServiceName(selectedServiceToBeEdited.name)
         setDuration(selectedServiceToBeEdited.duration)
         setServicePrice(selectedServiceToBeEdited.price)
-        setSelectedServiceCategory(selectedServiceToBeEdited)
+        setSelectedServiceCategory({
+            _id: selectedServiceToBeEdited.categoryId,
+            categoryName: selectedServiceToBeEdited.categoryName
+        })
 
 
         if (selectedServiceToBeEdited.idsOfWorkersWhoCanHandleTheService.length > 0) {
@@ -75,10 +78,11 @@ const EditService = ({
 
 
     const editServ = async () => {
+        console.log(selectedServiceCategory)
         try {
             const response = await editService({
                 shopId,
-                categoryId: selectedServiceToBeEdited.categoryId,
+                categoryId: selectedServiceCategory._id,
                 service: {
                     _id: selectedServiceToBeEdited._id,
                     name: serviceName,

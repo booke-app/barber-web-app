@@ -1,25 +1,71 @@
-import {UploadImage} from "../UploadImage/UploadImage";
-import {useSelector} from "react-redux";
-import {useState} from "react";
+import {
+    UploadImage
+} from "../UploadShopMainImage/UploadShopMainImage";
+import {useDispatch, useSelector} from "react-redux";
+import {useEffect, useState} from "react";
+import {saveAboutUs} from "./actions";
+import {
+    setModalContent
+} from "../../Features/modal/modal-slice";
+import {
+    GalleryOfImages
+} from "../GalleryOfImages/GalleryOfImages";
 
 const GeneralShopSettings = () => {
     const shop = useSelector(state => state.authorizeUser.shop)
+    const dispatch = useDispatch()
+    const [aboutUs, setAboutUs] = useState(null)
 
-    const [firstName, setFirstName] = useState(null)
-    const [lastName, setLastName] = useState(null)
-    const [firstNameEditStarted, setFirstNameEditStarted] = useState(false)
-    const [lastNameEditStarted, setLastNameEditStarted] = useState(false)
+    const save = async () => {
+        try {
+            const res = await saveAboutUs({aboutUs: aboutUs})
+            setAboutUs(res)
+            dispatch(setModalContent({
+                message: 'General information of your shop was saved successfully',
+                status: 200
+            }))
+        } catch (e) {
+            dispatch(setModalContent({
+                message: 'General information of your shop was not saved successfully',
+                status: 500
+            }))
+        }
+    }
+
+    useEffect(() => {
+        if (shop.aboutUs) {
+            setAboutUs(shop.aboutUs)
+        }
+    }, [shop.aboutUs]);
+
     return (<div>
+        <div
+            style={{justifyContent: "space-around"}}
+            className={' mt-5 sm:flex w-full  sm:items-center'}>
+            <div
+                className={'sm:flex w-full  sm:items-start flex-col'}>
+                <h2
+                    className="text-base sm:flex sm:items-center font-semibold leading-7  text-gray-900">
+                    Shop Profile</h2>
+                <p className="mt-1 text-sm leading-6 text-gray-500">
+                    This information will be
+                    displayed publicly so be
+                    careful what you share.
+                </p>
+            </div>
+            <div
+                className={'mt-4 sm:ml-16 sm:mt-0 sm:flex-none'}>
+                <button
+
+                    className={'block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'}
+                    onClick={() => {
+                        save()
+                    }}>Save
+                </button>
+            </div>
+        </div>
         <UploadImage/>
-
-        <h2 className="text-base font-semibold leading-7 pt-5 text-gray-900">Shop
-            Profile</h2>
-        <p className="mt-1 text-sm leading-6 text-gray-500">
-            This information will be
-            displayed publicly so be
-            careful what you share.
-        </p>
-
+        <GalleryOfImages/>
 
         <dl className="mt-6 space-y-6 divide-y divide-gray-100 border-t border-gray-200 text-sm leading-6">
             <div
@@ -28,34 +74,9 @@ const GeneralShopSettings = () => {
                     name
                 </dt>
                 <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
-                    {!firstNameEditStarted ?
-                        <div
-                            className="text-gray-900">{shop.name}
-                        </div> : <input
-                            value={firstName ? firstName : ''}
-                            className="text-gray-900 shadow ring-black-1"
-                            onChange={(e) => {
-                                setFirstName(e.target.value)
-                            }}/>}
-                    {/*<button*/}
-                    {/*    type="button"*/}
-                    {/*    disabled={firstNameEditStarted && !firstName}*/}
-                    {/*    onClick={() => {*/}
-                    {/*        setFirstNameEditStarted(true)*/}
-                    {/*    }}*/}
-                    {/*    className="font-semibold text-indigo-600 hover:text-indigo-500 disabled:text-gray-500">*/}
-                    {/*    Update*/}
-                    {/*</button>*/}
-                    {firstNameEditStarted &&
-                        <button
-                            type="button"
-                            onClick={() => {
-                                setFirstNameEditStarted(false)
-                                setFirstName(null)
-                            }}
-                            className="font-semibold text-red-600 hover:text-indigo-500">
-                            Cancel
-                        </button>}
+                    <div
+                        className="text-gray-900">{shop.name}
+                    </div>
                 </dd>
             </div>
             <div
@@ -64,34 +85,9 @@ const GeneralShopSettings = () => {
                     phone
                 </dt>
                 <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
-                    {!lastNameEditStarted ?
-                        <div
-                            className="text-gray-900">{shop.phone}
-                        </div> : <input
-                            value={lastName ? lastName : ''}
-                            className="text-gray-900 shadow ring-black-1"
-                            onChange={(e) => {
-                                setLastName(e.target.value)
-                            }}/>}
-                    {/*<button*/}
-                    {/*    disabled={!lastName && lastNameEditStarted}*/}
-                    {/*    type="button"*/}
-                    {/*    onClick={() => {*/}
-                    {/*        setLastNameEditStarted(true)*/}
-                    {/*    }}*/}
-                    {/*    className="font-semibold text-indigo-600 hover:text-indigo-500">*/}
-                    {/*    Update*/}
-                    {/*</button>*/}
-                    {lastNameEditStarted &&
-                        <button
-                            type="button"
-                            onClick={() => {
-                                setLastNameEditStarted(false)
-                                setLastName(null)
-                            }}
-                            className="font-semibold text-red-600 hover:text-indigo-500">
-                            Cancel
-                        </button>}
+                    <div
+                        className="text-gray-900">{shop.phone}
+                    </div>
                 </dd>
             </div>
             <div
@@ -103,11 +99,6 @@ const GeneralShopSettings = () => {
                     <div
                         className="text-gray-900">{shop?.location?.address + ", " + shop?.location?.city + ', ' + shop?.location?.zipCode}
                     </div>
-                    {/*<button*/}
-                    {/*    type="button"*/}
-                    {/*    className="font-semibold text-indigo-600 hover:text-indigo-500">*/}
-                    {/*    Update*/}
-                    {/*</button>*/}
                 </dd>
             </div>
             <div
@@ -119,11 +110,7 @@ const GeneralShopSettings = () => {
                     <div
                         className="text-gray-900">{shop?._id}
                     </div>
-                    {/*<button*/}
-                    {/*    type="button"*/}
-                    {/*    className="font-semibold text-indigo-600 hover:text-indigo-500">*/}
-                    {/*    Update*/}
-                    {/*</button>*/}
+
                 </dd>
             </div>
             <div className={' pt-6'}>
@@ -136,8 +123,10 @@ const GeneralShopSettings = () => {
             rows={4}
             name="comment"
             id="comment"
+            onChange={(e) => setAboutUs(e.target.value)}
             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-            defaultValue={''}
+            value={aboutUs ? aboutUs : ''}
+
         />
                 </div>
             </div>

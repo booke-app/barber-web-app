@@ -82,6 +82,17 @@ const authorisedSlice = createSlice({
         setVacationModeInRedux(state, action) {
             state.shop.settings.isOnVacation = action.payload
         },
+        setUpdatedImage(state, action) {
+            if (state?.shop?.images?.shopImage) {
+                state.shop.images.shopImage.url = action.payload
+
+            }
+        }, setUpdatedGallery(state, action) {
+            if (state?.shop?.images?.gallery) {
+                state.shop.images.gallery = action.payload
+
+            }
+        }
     },
     extraReducers: builder => {
         builder.addCase(login.pending, (state, action) => {
@@ -127,6 +138,8 @@ const authorisedSlice = createSlice({
 
 
 export const {
+    setUpdatedGallery,
+    setUpdatedImage,
     setUpdateCategoriesWithItsServices,
     setUpdatedWorkers,
     setUpdatedAppointments,
