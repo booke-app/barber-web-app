@@ -92,6 +92,11 @@ const authorisedSlice = createSlice({
                 state.shop.images.gallery = action.payload
 
             }
+        }, setUpdatedClients(state, action) {
+            if (state?.shop?.clients) {
+                state.shop.clients = [...action.payload]
+
+            }
         }
     },
     extraReducers: builder => {
@@ -139,6 +144,8 @@ const authorisedSlice = createSlice({
 
 export const {
     setUpdatedGallery,
+    setUpdatedClients,
+
     setUpdatedImage,
     setUpdateCategoriesWithItsServices,
     setUpdatedWorkers,

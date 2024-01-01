@@ -3,7 +3,7 @@ import {useEffect, useState} from 'react'
 import {
     BuildingStorefrontIcon,
 
-    CalendarIcon
+    CalendarIcon, PauseIcon
 } from '@heroicons/react/24/outline'
 import {classNames} from "../../Utilities/utilities";
 import {useSelector} from "react-redux";
@@ -11,19 +11,22 @@ import OpenHoursWrapper
     from "../../Components/OpenHoursWrapper/OpenHoursWrapper";
 import GeneralShopSettings
     from "../../Components/GeneralShopSettings/GeneralShopSettings";
+import {
+    RocketLaunchIcon
+} from "@heroicons/react/24/outline";
 
 
 const secondaryNavigation = [
     {
         name: 'General',
         icon: BuildingStorefrontIcon,
-        current: true
     },
     {
         name: 'Business Hours',
-        href: '#',
         icon: CalendarIcon,
-        current: false
+    }, {
+        name: 'Vacations',
+        icon: RocketLaunchIcon,
     },
 ]
 
@@ -36,7 +39,7 @@ export default function settingsPage() {
     return (
         <>
             <div
-                className="mx-auto max-w-7xl  lg:flex lg:gap-x-16 lg:px-8">
+                className="mx-auto max-w-7xl  lg:flex ">
                 <aside
                     className="flex overflow-x-auto border-b border-gray-900/5 py-4 lg:block lg:w-64 lg:flex-none lg:border-0 lg:py-20">
                     <nav
@@ -51,7 +54,7 @@ export default function settingsPage() {
                                             activeNavigation === item.name
                                                 ? 'bg-gray-50 text-indigo-600'
                                                 : 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50',
-                                            'group flex gap-x-3 rounded-md py-2 pl-2 pr-3 text-sm leading-6 font-semibold'
+                                            'group cursor-pointer flex gap-x-3 rounded-md py-2 pl-2 pr-3 text-sm leading-6 font-semibold'
                                         )}
                                     >
                                         <item.icon

@@ -40,7 +40,7 @@ import {
     UsersIcon,
     QueueListIcon,
     Cog6ToothIcon,
-    PauseIcon
+    PauseIcon, UserPlusIcon
 } from "@heroicons/react/24/outline";
 import DesktopNavigationSideBar
     from "./Components/DesktopNavigationSideBar/DesktopNavigationSideBar";
@@ -53,6 +53,8 @@ import {
 } from "./Features/modal/modal-slice";
 import {clientId} from "./Utilities/utilities";
 import {gapi} from "gapi-script";
+import ClientsPage
+    from "./Components/ClientsPage/ClientsPage";
 
 const urls = [{
     name: 'Calendar',
@@ -70,7 +72,12 @@ const urls = [{
     name: 'Settings',
     path: '/settings',
     icon: Cog6ToothIcon
-}, {name: 'Vacations', path: '/vacation', icon: PauseIcon},]
+}, {
+    name: 'Clients',
+    path: '/clients',
+    icon: UserPlusIcon
+},
+]
 
 
 function App() {
@@ -252,6 +259,9 @@ function App() {
                                 <Route path="/profile"
                                        element={
                                            <ProfilePage/>}/>
+                                <Route path="/clients"
+                                       element={
+                                           <ClientsPage/>}/>
                             </Routes>
                         </div>
                     </main>
