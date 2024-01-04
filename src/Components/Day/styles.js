@@ -58,6 +58,7 @@ export const styles = createStyles(
             width: '100%',
             alignItems: "center",
             display: "flex",
+            zIndex: 2,
             position: "absolute",
 
         }

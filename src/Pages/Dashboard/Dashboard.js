@@ -1,17 +1,19 @@
-import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import WeeklyView
     from "../../Components/WeeklyView/WeeklyView";
 import DayView from "../../Components/DayView/DayView";
-import Day from "../../Components/Day/Day";
-import SlideOverWithCloseButtonOnOutside
-    from "../../Components/SlideOverWithCloseButtonOnOutside/SlideOverWithCloseButtonOnOutside";
 import TwoDayViewConstructor
     from "../../Components/TwoDayViewConstructor/TwoDayViewConstructor";
 import ThreeDayViewConstructor
     from "../../Components/ThreeDayViewConstructor/ThreeDayViewConstructor";
 import MultipleWorkersCalendars
     from "../../Components/MultipleWorkersCalendars/MultipleWorkersCalendars";
+import {
+    BookAppointmentSlideOver
+} from "../../Components/BookAppointmentSlideOver/BookAppointmentSlideOver";
+import {
+    EditAppointmentSlideOver
+} from "../../Components/EditAppointmentSlideOver/EditAppointmentSlideOver";
 
 
 const Dashboard = () => {
@@ -21,7 +23,8 @@ const Dashboard = () => {
 
     return (
         <>
-            <SlideOverWithCloseButtonOnOutside/>
+            <BookAppointmentSlideOver/>
+            <EditAppointmentSlideOver/>
             {!numberOfMultipleWorkersShown && <>
                 {typeOfView === 'weeklyView' &&
                     <WeeklyView/>}

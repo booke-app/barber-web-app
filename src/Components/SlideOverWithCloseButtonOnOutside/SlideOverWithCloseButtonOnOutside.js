@@ -7,27 +7,25 @@ import
     setIsAppointmentSlideOverOpen, setSelectedTime
 } from "../../Features/appointment/appointment-slice";
 import ServicesList from "../ServicesList/ServicesList";
+import dayjs from "dayjs";
+import {
+    setSelectedDate
+} from "../../Features/calendar/calendar-slice";
+import {ChevronRightIcon} from "@heroicons/react/20/solid";
+import {
+    SelectAServiceButtonInSlideOver
+} from "../SelectAServiceButtonInSlideOver/SelectAServiceButtonInSlideOver";
 
-export default function SlideOverWithCloseButtonOnOutside() {
-    const [open, setOpen] = useState(false)
-    const isAppointmentSlideOverOpen = useSelector(state => state.appointment.isAppointmentSlideOverOpen)
-    const dispatch = useDispatch()
-    useEffect(() => {
-        if (!open && isAppointmentSlideOverOpen) {
-            dispatch(setSelectedTime(null))
-            dispatch(setIsAppointmentSlideOverOpen(false))
-        }
+export default function SlideOverWithCloseButtonOnOutside({
+                                                              children,
+                                                              open,
+                                                              setOpen,
+                                                              title
+                                                          }) {
 
-    }, [open]);
-    useEffect(() => {
-        if (isAppointmentSlideOverOpen && !open) {
-            setOpen(true)
-        }
-
-    }, [isAppointmentSlideOverOpen]);
     return (
         <Transition.Root show={open} as={Fragment}>
-            <Dialog as="div" className="relative z-10"
+            <Dialog as="div" className="relative "
                     onClose={setOpen}>
                 <Transition.Child
                     as={Fragment}
@@ -86,21 +84,23 @@ export default function SlideOverWithCloseButtonOnOutside() {
                                         </div>
                                     </Transition.Child>
                                     <div
-                                        className="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl">
+                                        className="flex pt-20 lg:pt-5 h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl">
                                         <div
                                             className="px-4 sm:px-6">
                                             <Dialog.Title
-                                                className="text-base font-semibold leading-6 text-gray-900">
-                                                Panel title
+                                                className="text-xl font-semibold leading-6 text-gray-900">
+                                                {title}
                                             </Dialog.Title>
                                         </div>
                                         <div
                                             className="relative mt-6 flex-1 px-4 sm:px-6">
-                                            <ServicesList/>
+                                            {children}
                                         </div>
                                     </div>
                                 </Dialog.Panel>
+
                             </Transition.Child>
+
                         </div>
                     </div>
                 </div>

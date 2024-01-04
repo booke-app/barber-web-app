@@ -15,15 +15,9 @@ export default function WorkerSelectorInsideMultipleWorkersCalendar(
     }) {
     const workersFromShop = useSelector(state => state.authorizeUser.shop.workers)
     const dispatch = useDispatch()
-    const numberOfMultipleWorkersShown = useSelector(state => state.typeOfView.numberOfMultipleWorkersShown)
     const workerSelectedOnFirstView = useSelector(state => state.typeOfView?.firstViewWorker)
     const workerSelectedOnSecondView = useSelector(state => state.typeOfView?.secondViewWorker)
     const workerSelectedOnThirdView = useSelector(state => state.typeOfView?.thirdViewWorker)
-    const selectedWorkerForWeekView = useSelector(state => state.typeOfView?.selectedWorkerForWeekView)
-
-    console.log(workersFromShop)
-    console.log(indexOfWorker)
-    console.log(workerSelectedOnFirstView)
     return (<Menu as="div"
 
                   className="relative mt-5 mb-5">
@@ -73,9 +67,8 @@ export default function WorkerSelectorInsideMultipleWorkersCalendar(
                                               'block px-4 py-2 text-sm'
                                           )}
                                     >
-                                        {index === 0 && workerSelectedOnFirstView?.firstName + " " + workerSelectedOnFirstView?.lastName}
-                                        {index === 1 && workerSelectedOnSecondView?.firstName + " " + workerSelectedOnSecondView?.lastName}
-                                        {index === 2 && workerSelectedOnThirdView?.firstName + " " + workerSelectedOnThirdView?.lastName}
+                                       {worker?.firstName + " " + worker?.lastName}
+
                                     </span>
                                 )}
                             </Menu.Item>)

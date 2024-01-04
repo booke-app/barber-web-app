@@ -23,7 +23,7 @@ const navigation = [
 ]
 const secondaryNavigation = [
     {
-        name: 'Shop',
+        name: 'General Info',
         icon: UserCircleIcon,
         current: true
     },

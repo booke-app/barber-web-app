@@ -43,7 +43,7 @@ export const getAppointmentsOfDate = (index, indexOfWorkerThatTheDayRepresents) 
 
         let arr = []
         appointments?.map(appointment => {
-            if (dayjs(dayjs(selectedDate).add(index, "d")).isSame(dayjs(appointment.dateAndTime.when), 'd') && dayjs(dayjs(selectedDate).add(index, "d")).isSame(dayjs(appointment.dateAndTime.endsAt), 'd') &&
+            if (dayjs(dayjs(selectedDate).add(index, "d")).isSame(dayjs(appointment.dateAndTime.when), 'd') &&
                 appointment.workerData._id === workerOfThisDateAndIndex?._id
             ) {
                 arr.push(appointment)
@@ -51,13 +51,8 @@ export const getAppointmentsOfDate = (index, indexOfWorkerThatTheDayRepresents) 
         })
         setAppointmentsOfDate(arr)
 
-        if(arr.length>4){
-            console.log(workerOfThisDateAndIndex, 'workerOfThisDateAndIndex')
-            console.log(indexOfWorkerThatTheDayRepresents,'indexOfWorkerThatTheDayRepresents')
-            console.log(index,'index')
-console.log(arr,'appointemtns')
-        }
-    }, [workerOfThisDateAndIndex,selectedDate]);
+    }, [workerOfThisDateAndIndex, selectedDate, appointments]);
+
 
     return appointmentsOfDate
 }

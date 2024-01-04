@@ -3,23 +3,36 @@ import {RadioGroup} from '@headlessui/react'
 import {classNames} from "../../Utilities/utilities";
 import {useSelector} from "react-redux";
 import ServiceCard from "../ServiceCard/ServiceCard";
+import SlideOverWithCloseButtonOnOutside
+    from "../SlideOverWithCloseButtonOnOutside/SlideOverWithCloseButtonOnOutside";
 
 
-export default function ServicesList() {
-    const servicesFromShop = useSelector(state => state.authorizeUser.shop.services)
-    const [selected, setSelected] = useState(servicesFromShop?.[0])
+export default function ServicesList({open, setOpen}) {
+    const servicesFromShop = useSelector(state => state.authorizeUser.shop.categoriesWithItsServices)
+
 
     return (
-        <RadioGroup value={selected} onChange={setSelected}>
-            <RadioGroup.Label className="sr-only">Server
-                size</RadioGroup.Label>
-            <div className="space-y-4">
-                {servicesFromShop?.map((service, index) => (
+        <SlideOverWithCloseButtonOnOutside
+            title={'Select Service'} open={open}
+            setOpen={setOpen}>
 
-                    <ServiceCard key={index}
-                                 service={service}/>
-                ))}
+
+            <div className="space-y-4">
+                {servicesFromShop.map(category => category.services.length > 0 && <>
+                        <p className={'text-base font-semibold leading-6 text-gray-900'}>{category.categoryName}</p>
+                        {category.services.map((service, index) => (
+
+                            <ServiceCard close={() => {
+                                setOpen(false)
+                            }} key={index}
+                                         service={service}/>
+                        ))}
+                    </>
+                )}
+
+
             </div>
-        </RadioGroup>
+
+        </SlideOverWithCloseButtonOnOutside>
     )
 }
