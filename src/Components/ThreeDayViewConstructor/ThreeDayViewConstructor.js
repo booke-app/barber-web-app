@@ -40,40 +40,7 @@ const ThreeDayViewConstructor = () => {
                                 index={index}/>)}
                     </div>
                 </div>
-                <div
-                    className="hidden w-1/3   max-w-md flex-none border-l border-gray-100 px-8 py-10 md:block">
-                    <DateCalendar
-                        slotProps={{
-                            textField: {
-                                size: "small",
-                                error: false,
-                            },
-                        }}
 
-                        format="DD-MM-YYYY"
-                        defaultValue={dayjs(Date.now())}
-                        value={dayjs(selectedDate)}
-                        onChange={
-                            (e) => {
-                                dispatch(setSelectedDate({...e}))
-                            }
-                        }
-                        sx={{
-                            '& .MuiOutlinedInput-root': {
-
-                                '& fieldset': {
-                                    padding: 0,
-                                    borderColor: 'transparent',
-                                },
-                                '&:hover fieldset': {
-                                    borderColor: 'transparent',
-                                },
-                                '&.Mui-focused fieldset': {
-                                    borderColor: 'transparent',
-                                }
-                            },
-                        }}
-                    /></div>
             </div>
         </div>
     )

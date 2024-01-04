@@ -16,9 +16,13 @@ import RedLineThatShowsTheTime
 import HourSlotInCalendar
     from "../HourSlotInCalendar/HourSlotInCalendar";
 import {
+    setDayThatTheAppointmentWasDroppedAt,
     setIndexOfDayThatWasPressed,
-    setIsAppointmentSlideOverOpen, setSelectedTime
+    setIsAppointmentSlideOverOpen,
+    setSelectedTime,
+    setSelectedWorker
 } from "../../Features/appointment/appointment-slice";
+import {handleDragOver} from "../../Utilities/utilities";
 
 const Day = ({
                  index,
@@ -26,20 +30,26 @@ const Day = ({
              }) => {
     const selectedDate = useSelector(state => state.calendar.selectedDate)
     const indexOfDayThatActiveTimeWasPressed = useSelector(state => state.appointment.indexOfDayThatWasPressed)
-    const dayName = dayjs(selectedDate).add(index, "day").format("ddd")
-    const dayNumber = dayjs(selectedDate).add(index, "day").format("DD")
     const [arrayToMapBasedOnNumberOfWorkersForCalendarToShow, setArrayToMapBasedOnNumberOfWorkersForCalendarToShow] = useState([0])
     const typeOfView = useSelector(state => state.typeOfView.typeOfView)
     const workersFromShop = useSelector(state => state.authorizeUser.shop.workers)
-    const firstViewWorkerId = useSelector(state => state.typeOfView.firstViewWorkerId)
     const dispatch = useDispatch()
     const appointmentsOfSpecificDate = getAppointmentsOfDate(index, indexOfWorkerThatTheDayRepresents)
+    const [workerBasedOnTheIndexOfTheDay, setWorkerBasedOnTheIndexOfTheDay] = useState(null)
     // const getVacationsOfSpecificDateBasedOnWorker =  getVacationsOfSpecificDate(index)
     const selectedTimeForAppointment = useSelector(state => state.appointment.selectedTime)
     const [activeTime, setActiveTime] = useState(null)
     const wrapperOfActiveFifteenMinute = useRef(null);
     const dayToRender = dayConstructor(selectedDate, index)
+    const firstViewWorker = useSelector(state => state.typeOfView.firstViewWorker)
+    const secondViewWorker = useSelector(state => state.typeOfView.secondViewWorker)
+    const thirdViewWorker = useSelector(state => state.typeOfView.thirdViewWorker)
     const isAppointmentSlideOverOpen = useSelector(state => state.appointment.isAppointmentSlideOverOpen)
+    const selectedWorkerForAppointment = useSelector(state => state.appointment.selectedWorker)
+    const [isAppointmentBeingResized, setIsAppointmentBeingResized] = useState(false)
+    const [newTopForAppointmentAfterDrag, setNewTopAForAppointmentAfterDrag] = useState(null)
+
+
     const hoverOutside = event => {
 
         if (wrapperOfActiveFifteenMinute.current && !wrapperOfActiveFifteenMinute.current.contains(event.target)) {
@@ -55,11 +65,27 @@ const Day = ({
         };
     }, []);
 
+
+    useEffect(() => {
+
+        if (!indexOfWorkerThatTheDayRepresents) {
+            setWorkerBasedOnTheIndexOfTheDay(firstViewWorker)
+        }
+        if (indexOfWorkerThatTheDayRepresents === 1) {
+            setWorkerBasedOnTheIndexOfTheDay(secondViewWorker)
+        }
+        if (indexOfWorkerThatTheDayRepresents === 2) {
+            setWorkerBasedOnTheIndexOfTheDay(thirdViewWorker)
+        }
+
+    }, [indexOfWorkerThatTheDayRepresents, firstViewWorker]);
+
+
     useEffect(() => {
         changeHowManyWorkersWillBeShownInOneDay()
     }, [typeOfView])
     useEffect(() => {
-        if (arrayToMapBasedOnNumberOfWorkersForCalendarToShow.length === 1 && !firstViewWorkerId) {
+        if (arrayToMapBasedOnNumberOfWorkersForCalendarToShow.length === 1) {
             dispatch(setFirstViewWorker(workersFromShop?.[0]))
         }
 
@@ -77,7 +103,7 @@ const Day = ({
     const getRelativeCoordsToShowWhichTimeSlotIsHovered = (event) => {
         let bounds = event.target.getBoundingClientRect();
         let y = event.clientY - bounds.top;
-
+        let yNonFixed = event.clientY - bounds.top;
 
         if (y < 30) {
             y = 0
@@ -94,14 +120,28 @@ const Day = ({
 
 
         setActiveTime({
-            cord: {y: y},
+            cord: {y: y, yNonFixed: yNonFixed},
             value: event.target.classList.value
         })
     }
+    const onDropAppointmentAfterDrag = (event) => {
+        dispatch(setDayThatTheAppointmentWasDroppedAt(dayjs(selectedDate).add(index, 'd').$d))
+        let bounds = event.target.getBoundingClientRect();
+        let y = event.clientY - bounds.top;
+        if (!isNaN((y / 2) + (event.target.classList.value * 120))) {
 
+            setNewTopAForAppointmentAfterDrag((y / 2) + (event.target.classList.value * 120))
+        }
+
+    }
 
     return (
-        <div style={styles.wrapper}>
+        <div style={styles.wrapper}
+             onDrop={onDropAppointmentAfterDrag}
+             onDragOver={handleDragOver}
+
+
+        >
             {Object.keys(dayToRender)?.map((time, index) =>
                 <HourSlotInCalendar
                     key={index}
@@ -110,17 +150,18 @@ const Day = ({
                     dayObjectThatTheSlotIsPartOf={dayToRender}
                     time={time}/>)}
 
-            {(activeTime || (selectedTimeForAppointment && index === indexOfDayThatActiveTimeWasPressed)) &&
+            {(activeTime || (selectedTimeForAppointment && index === indexOfDayThatActiveTimeWasPressed && selectedWorkerForAppointment?._id === workerBasedOnTheIndexOfTheDay?._id)) && !isAppointmentBeingResized &&
                 <div ref={wrapperOfActiveFifteenMinute}
                      onClick={() => {
                          if (!isAppointmentSlideOverOpen) {
                              dispatch(setIsAppointmentSlideOverOpen(true))
                              dispatch(setIndexOfDayThatWasPressed(index))
+                             dispatch(setSelectedWorker(workerBasedOnTheIndexOfTheDay))
                              dispatch(setSelectedTime(dayjs
                              (new Date(
-                                     dayjs(selectedDate).format('YYYY'),
-                                     dayjs(selectedDate).format('MM') - 1,
-                                     dayjs(selectedDate).format('DD'),
+                                     dayjs(selectedDate).add(index, 'd').format('YYYY'),
+                                     dayjs(selectedDate).add(index, 'd').format('MM') - 1,
+                                     dayjs(selectedDate).add(index, 'd').format('DD'),
                                      activeTime?.value,
                                      activeTime?.cord.y < 30 ? 0 :
                                          activeTime?.cord.y === 30 ? '15' :
@@ -164,12 +205,16 @@ const Day = ({
                                     : (activeTime?.cord.y === 90 || dayjs(selectedTimeForAppointment)?.format('mm') >= 45) && '45'}
                     </p>
                 </div>}
-            {/*{dayjs(selectedDate).isSame(Date.now(), 'd') &&*/}
             <RedLineThatShowsTheTime
                 index={index}
                 indexOfWorkerThatTheDayRepresents={indexOfWorkerThatTheDayRepresents}/>
+
             {appointmentsOfSpecificDate?.map(appointment =>
                 <Appointment
+                    setNewTopAfterDrag={setNewTopAForAppointmentAfterDrag}
+                    newTopAfterDrag={newTopForAppointmentAfterDrag}
+                    setIsAppointmentBeingResized={setIsAppointmentBeingResized}
+                    positionOfCursor={activeTime}
                     appointment={appointment}/>)}
         </div>
 

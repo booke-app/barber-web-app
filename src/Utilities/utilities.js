@@ -147,3 +147,55 @@ export const isDateGivenTheSameOrBetweenTwoDateObjects = (dateWeWantToCompare, f
 export const classNames = (...classes) => {
     return classes.filter(Boolean).join(' ')
 }
+
+
+export const turnPixelsIntoHoursAndMinutes = (pixels) => {
+    // Calculate hours
+    let hours = Math.floor(pixels / 120);
+
+    // Calculate remaining pixels for minutes
+    const remainingPixels = pixels % 120;
+
+    // Calculate minutes
+    let minutes = Math.floor(remainingPixels / 2);
+
+    if (minutes < 10) {
+        minutes = '0' + minutes
+    }
+    if (hours < 10) {
+        hours = '0' + hours
+    }
+    return {hours, minutes};
+
+}
+
+export const handleDragOver = (e) => {
+    e.preventDefault()
+}
+
+
+export const returnADateObjectInWhichTheYearMonthAndDayRemainTheSameButOnlyTheHoursAndMinutesChange = (dateObjectFromWhichWeWillHoldYearMonthAndDate, pixelsToCalculateHoursAndMinutes, indexOfDay) => {
+    return dayjs(new Date(
+        parseInt(dayjs(dateObjectFromWhichWeWillHoldYearMonthAndDate).format('YYYY')),
+        parseInt(dayjs(dateObjectFromWhichWeWillHoldYearMonthAndDate).format('MM')) - 1,
+        parseInt(dayjs(dateObjectFromWhichWeWillHoldYearMonthAndDate).format('DD')),
+        turnPixelsIntoHoursAndMinutes(pixelsToCalculateHoursAndMinutes).hours,
+        turnPixelsIntoHoursAndMinutes(pixelsToCalculateHoursAndMinutes).minutes
+    )).$d
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
