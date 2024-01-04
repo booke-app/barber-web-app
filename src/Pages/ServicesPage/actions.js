@@ -12,3 +12,16 @@ export const deleteService = async (payload) => {
 
 
 }
+
+export const deleteCategory = async (payload) => {
+    try {
+        const res = await request('/category', payload, null, "DELETE")
+        console.log(res, 'deleteApp')
+        return res.data.categoriesWithItsServices
+
+    } catch (e) {
+        throw new Error(e)
+    }
+
+
+}

@@ -186,7 +186,25 @@ export const returnADateObjectInWhichTheYearMonthAndDayRemainTheSameButOnlyTheHo
 }
 
 
+export const roundPixelsToTheNearestPixelWhichWillProduceAFiveMinute = (y) => {
+    let pixels
 
+    for (let i = 0; i < 13; i++) {
+        if (y < 10) {
+            pixels = 0
+
+        }
+        if ((y > (i * 10)) && (y < ((i + 1) * 10))) {
+            pixels = i * 10
+        }
+        if ((y === (i * 10))) {
+            pixels = i * 10
+        }
+    }
+
+
+    return pixels
+}
 
 
 

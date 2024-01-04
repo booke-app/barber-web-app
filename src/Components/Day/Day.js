@@ -22,7 +22,10 @@ import {
     setSelectedTime,
     setSelectedWorker
 } from "../../Features/appointment/appointment-slice";
-import {handleDragOver} from "../../Utilities/utilities";
+import {
+    handleDragOver,
+    roundPixelsToTheNearestPixelWhichWillProduceAFiveMinute
+} from "../../Utilities/utilities";
 
 const Day = ({
                  index,
@@ -119,6 +122,9 @@ const Day = ({
         }
 
 
+        yNonFixed = roundPixelsToTheNearestPixelWhichWillProduceAFiveMinute(yNonFixed)
+
+
         setActiveTime({
             cord: {y: y, yNonFixed: yNonFixed},
             value: event.target.classList.value
@@ -128,6 +134,11 @@ const Day = ({
         dispatch(setDayThatTheAppointmentWasDroppedAt(dayjs(selectedDate).add(index, 'd').$d))
         let bounds = event.target.getBoundingClientRect();
         let y = event.clientY - bounds.top;
+
+
+        y = roundPixelsToTheNearestPixelWhichWillProduceAFiveMinute(y)
+
+
         if (!isNaN((y / 2) + (event.target.classList.value * 120))) {
 
             setNewTopAForAppointmentAfterDrag((y / 2) + (event.target.classList.value * 120))

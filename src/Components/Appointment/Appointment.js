@@ -22,6 +22,7 @@ import {
 import {
     handleDragOver,
     returnADateObjectInWhichTheYearMonthAndDayRemainTheSameButOnlyTheHoursAndMinutesChange,
+    roundPixelsToTheNearestPixelWhichWillProduceAFiveMinute,
     turnPixelsIntoHoursAndMinutes
 } from "../../Utilities/utilities";
 
@@ -82,9 +83,14 @@ const Appointment = ({
         if (isAppointmentBeingDragged) {
             if (dayThatTheAppointmentWasDroppedAt !== null) {
                 if (!dayjs(appointment.dateAndTime.when)?.isSame(dayjs(dayThatTheAppointmentWasDroppedAt))) {
-                    editBooking()
-                    setIsAppointmentBeingDragged(false)
-                    dispatch(setDayThatTheAppointmentWasDroppedAt(null))
+
+                    const performBookingAndClear = async () => {
+                        await editBooking()
+                        setIsAppointmentBeingDragged(false)
+                        dispatch(setDayThatTheAppointmentWasDroppedAt(null))
+                    }
+
+                    performBookingAndClear()
                 }
             }
         }
@@ -118,6 +124,7 @@ const Appointment = ({
                         type: appointment.type,
                         serviceId: appointment.serviceId,
                         _id: appointment._id,
+                        price: appointment?.price
 
                     },
                     shopId: shopId,
@@ -151,9 +158,23 @@ const Appointment = ({
 
                 let bounds = event.target.getBoundingClientRect();
                 let y = event.clientY - bounds.top;
+
+
+                console.log(y, 'yAppointment')
+
                 if (y > 0) {
+                    y = roundPixelsToTheNearestPixelWhichWillProduceAFiveMinute(y)
+
+                    console.log('beforeTop', y)
                     setTop(top + y)
                 }
+                if (y < 0) {
+                    y = roundPixelsToTheNearestPixelWhichWillProduceAFiveMinute(y)
+
+                    console.log('beforeTop', y)
+                    setTop(top - y)
+                }
+
             }}
             onDragCapture={(event) => {
 
