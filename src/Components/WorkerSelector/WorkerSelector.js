@@ -50,14 +50,14 @@ export default function WorkerSelector() {
                     className="absolute right-0 z-10 mt-3 w-36 origin-top-right overflow-hidden rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1">
                         {workersFromShop?.map((worker, i) =>
-                            <Menu.Item>
-                                key={i}
+                            <Menu.Item as='div'>
                                 {({active}) => (
-                                    <span onClick={() => {
-                                        dispatch(setSelectedWorkerForWeekView(worker))
-                                        dispatch(setFirstViewWorker(worker))
-                                        dispatch(setNumberOfMultipleWorkersShown(null))
-                                    }}
+                                    <span key={i}
+                                          onClick={() => {
+                                              dispatch(setSelectedWorkerForWeekView(worker))
+                                              dispatch(setFirstViewWorker(worker))
+                                              dispatch(setNumberOfMultipleWorkersShown(null))
+                                          }}
                                           className={classNames(
                                               active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                                               'block px-4 py-2 text-sm'
@@ -69,7 +69,7 @@ export default function WorkerSelector() {
                             </Menu.Item>)
                         }
                         {workersFromShop?.length >= 2 &&
-                            <Menu.Item>
+                            <Menu.Item as='div'>
                                 {({active}) => (
                                     <span onClick={() => {
                                         dispatch(setNumberOfMultipleWorkersShown(2))
@@ -84,7 +84,7 @@ export default function WorkerSelector() {
                                 )}
                             </Menu.Item>}
                         {workersFromShop?.length >= 3 &&
-                            <Menu.Item>
+                            <Menu.Item as='div'>
                                 {({active}) => (
                                     <span onClick={() => {
                                         dispatch(setNumberOfMultipleWorkersShown(3))
