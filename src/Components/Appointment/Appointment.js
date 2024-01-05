@@ -37,7 +37,7 @@ const Appointment = ({
                      }) => {
     const dispatch = useDispatch()
     const shopId = useSelector(state => state.authorizeUser.shop._id)
-    const [heightOfAppointmentToDetermineTheDuration, setHeightOfAppointmentToDetermineTheDuration] = useState(Math.floor(appointment.dateAndTime.duration / 15) * 30)
+    const [heightOfAppointmentToDetermineTheDuration, setHeightOfAppointmentToDetermineTheDuration] = useState((appointment.dateAndTime.duration / 15) * 30)
     const [top, setTop] = useState(((dayjs(appointment.dateAndTime.when).format("HH") * 120) + (
         dayjs(appointment.dateAndTime.when).format('mm') * 2)))
     const [areUpDownArrowsOnTheBottomOfTheAppointmentClicked, setAreUpDownArrowsOnTheBottomOfTheAppointmentClicked] = useState(false)
