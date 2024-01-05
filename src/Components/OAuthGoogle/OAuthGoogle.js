@@ -52,7 +52,6 @@ const OAuthGoogle = ({type}) => {
 
             clientId={clientId}
             render={renderProps => {
-                console.log(renderProps, 'renderProds')
                 return (
                     <div
                         className={'flex w-full  border border-gray-900 rounded p-1 b cursor-pointer '}

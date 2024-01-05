@@ -17,8 +17,11 @@ import HourSlotInCalendar
     from "../HourSlotInCalendar/HourSlotInCalendar";
 import {
     setDayThatTheAppointmentWasDroppedAt,
+    setIdOfAppointmentThatWillBeEdited,
     setIndexOfDayThatWasPressed,
     setIsAppointmentSlideOverOpen,
+    setNewTopForAppointmentAfterDraggedAndDroppedOnAnotherDay,
+    setObjectThatContainsTheIdOfTheAppointmentThatWillBeEditedTheDayThatWasDroppedAtAndTheNewTopPosition,
     setSelectedTime,
     setSelectedWorker
 } from "../../Features/appointment/appointment-slice";
@@ -50,9 +53,6 @@ const Day = ({
     const isAppointmentSlideOverOpen = useSelector(state => state.appointment.isAppointmentSlideOverOpen)
     const selectedWorkerForAppointment = useSelector(state => state.appointment.selectedWorker)
     const [isAppointmentBeingResized, setIsAppointmentBeingResized] = useState(false)
-    const [newTopForAppointmentAfterDrag, setNewTopAForAppointmentAfterDrag] = useState(null)
-
-
     const hoverOutside = event => {
 
         if (wrapperOfActiveFifteenMinute.current && !wrapperOfActiveFifteenMinute.current.contains(event.target)) {
@@ -130,18 +130,27 @@ const Day = ({
             value: event.target.classList.value
         })
     }
-    const onDropAppointmentAfterDrag = (event) => {
-        dispatch(setDayThatTheAppointmentWasDroppedAt(dayjs(selectedDate).add(index, 'd').$d))
+    const onDropAppointmentAfterDrag = async (event) => {
         let bounds = event.target.getBoundingClientRect();
         let y = event.clientY - bounds.top;
+
+        let idOfAppointment = event.dataTransfer.getData('id')
 
 
         y = roundPixelsToTheNearestPixelWhichWillProduceAFiveMinute(y)
 
 
         if (!isNaN((y / 2) + (event.target.classList.value * 120))) {
+            console.log('isNan')
+            dispatch(setObjectThatContainsTheIdOfTheAppointmentThatWillBeEditedTheDayThatWasDroppedAtAndTheNewTopPosition(
+                {
+                    _id: idOfAppointment,
+                    dayThatTheAppointmentWasDroppedAt: dayjs(selectedDate).add(index, 'd').$d,
+                    newTopForAppointment: (y / 2) + (event.target.classList.value * 120)
+                }
+            ))
 
-            setNewTopAForAppointmentAfterDrag((y / 2) + (event.target.classList.value * 120))
+
         }
 
     }
@@ -220,10 +229,9 @@ const Day = ({
                 index={index}
                 indexOfWorkerThatTheDayRepresents={indexOfWorkerThatTheDayRepresents}/>
 
-            {appointmentsOfSpecificDate?.map(appointment =>
+            {appointmentsOfSpecificDate?.map((appointment, i) =>
                 <Appointment
-                    setNewTopAfterDrag={setNewTopAForAppointmentAfterDrag}
-                    newTopAfterDrag={newTopForAppointmentAfterDrag}
+                    key={appointment.dateAndTime.when + appointment._id}
                     setIsAppointmentBeingResized={setIsAppointmentBeingResized}
                     positionOfCursor={activeTime}
                     appointment={appointment}/>)}

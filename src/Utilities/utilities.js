@@ -174,7 +174,7 @@ export const handleDragOver = (e) => {
 }
 
 
-export const returnADateObjectInWhichTheYearMonthAndDayRemainTheSameButOnlyTheHoursAndMinutesChange = (dateObjectFromWhichWeWillHoldYearMonthAndDate, pixelsToCalculateHoursAndMinutes, indexOfDay) => {
+export const returnADateObjectInWhichTheYearMonthAndDayRemainTheSameButOnlyTheHoursAndMinutesChange = (dateObjectFromWhichWeWillHoldYearMonthAndDate, pixelsToCalculateHoursAndMinutes) => {
     return dayjs(new Date(
         parseInt(dayjs(dateObjectFromWhichWeWillHoldYearMonthAndDate).format('YYYY')),
         parseInt(dayjs(dateObjectFromWhichWeWillHoldYearMonthAndDate).format('MM')) - 1,
@@ -185,27 +185,21 @@ export const returnADateObjectInWhichTheYearMonthAndDayRemainTheSameButOnlyTheHo
 
 }
 
+export function roundPixelsToTheNearestPixelWhichWillProduceAFiveMinute(pixels) {
+    // Assuming 120 pixels represent 60 minutes (1 hour)
+    const pixelsPerMinute = 120 / 60;
 
-export const roundPixelsToTheNearestPixelWhichWillProduceAFiveMinute = (y) => {
-    let pixels
+    // Calculate the equivalent minutes
+    const minutes = pixels / pixelsPerMinute;
 
-    for (let i = 0; i < 13; i++) {
-        if (y < 10) {
-            pixels = 0
+    // Round the minutes to the nearest 5 minutes
+    const roundedMinutes = Math.round(minutes / 5) * 5;
 
-        }
-        if ((y > (i * 10)) && (y < ((i + 1) * 10))) {
-            pixels = i * 10
-        }
-        if ((y === (i * 10))) {
-            pixels = i * 10
-        }
-    }
+    // Convert the rounded minutes back to pixels
+    const roundedPixels = roundedMinutes * pixelsPerMinute;
 
-
-    return pixels
+    return roundedPixels;
 }
-
 
 
 

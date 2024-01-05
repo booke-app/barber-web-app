@@ -12,6 +12,14 @@ import {useDispatch} from "react-redux";
 import {
     setIsAppointmentSlideOverOpen
 } from "../../Features/appointment/appointment-slice";
+import {
+    setSelectedDate
+} from "../../Features/calendar/calendar-slice";
+import dayjs from "dayjs";
+import {
+    CalendarDropDown
+} from "../CalendarDropdown/CalendarDropDown";
+
 
 export default function HeaderOfViews() {
     const dispatch = useDispatch()
@@ -19,9 +27,9 @@ export default function HeaderOfViews() {
         <div className="flex items-center">
             <div
                 className="hidden md:ml-4 md:flex md:items-center">
-                <DaySelector/>
                 <RangeOfDays/>
                 <WorkerSelector/>
+                <DaySelector/>
                 <div className="ml-6 h-6 w-px bg-gray-300"/>
                 <button
                     onClick={() => {
@@ -73,15 +81,17 @@ export default function HeaderOfViews() {
                         <div className="py-1">
                             <Menu.Item>
                                 {({active}) => (
-                                    <a
-                                        href="#"
+                                    <span
+                                        onClick={() => {
+                                            dispatch(setSelectedDate(dayjs(Date.now())))
+                                        }}
                                         className={classNames(
                                             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                                             'block px-4 py-2 text-sm'
                                         )}
                                     >
                                         Go to today
-                                    </a>
+                                    </span>
                                 )}
                             </Menu.Item>
                         </div>

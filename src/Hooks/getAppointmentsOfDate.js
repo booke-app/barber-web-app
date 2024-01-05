@@ -49,7 +49,8 @@ export const getAppointmentsOfDate = (index, indexOfWorkerThatTheDayRepresents) 
                 arr.push(appointment)
             }
         })
-        setAppointmentsOfDate(arr)
+        setAppointmentsOfDate([...arr])
+        console.log('app', arr)
 
     }, [workerOfThisDateAndIndex, selectedDate, appointments]);
 

@@ -23,7 +23,7 @@ export default function WorkerSelector() {
 
     }, [workersFromShop]);
 
-    return (<Menu as="div" className="relative">
+    return (<Menu as="div" className=" mr-4 relative">
             <Menu.Button
                 type="button"
                 className="flex items-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
@@ -49,11 +49,11 @@ export default function WorkerSelector() {
                 <Menu.Items
                     className="absolute right-0 z-10 mt-3 w-36 origin-top-right overflow-hidden rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1">
-                        {workersFromShop?.map((worker) =>
+                        {workersFromShop?.map((worker, i) =>
                             <Menu.Item>
+                                key={i}
                                 {({active}) => (
                                     <span onClick={() => {
-
                                         dispatch(setSelectedWorkerForWeekView(worker))
                                         dispatch(setFirstViewWorker(worker))
                                         dispatch(setNumberOfMultipleWorkersShown(null))

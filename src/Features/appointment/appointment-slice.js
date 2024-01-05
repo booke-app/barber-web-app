@@ -12,8 +12,10 @@ const initialState = {
     selectedClient: null,
     selectedWorker: null,
     appointmentToEdit: null,
+    objectThatContainsTheIdOfTheAppointmentThatWillBeEditedTheDayThatWasDroppedAtAndTheNewTopPosition: null,
     dayThatTheAppointmentWasDroppedAt: null,
-    newTopPositionForAppointmentAfterDrag: null
+    newTopPositionForAppointmentAfterDragAndDroppedOnAnotherDay: null,
+    idOfAppointmentThatWillBeEdited: null
 
 };
 
@@ -61,23 +63,33 @@ const appointmentSlice = createSlice({
             state.dayThatTheAppointmentWasDroppedAt = action.payload
 
         },
-        setNewTopForAppointmentAfterDrag(state, action) {
-            state.newTopPositionForAppointmentAfterDrag = action.payload
+        setNewTopForAppointmentAfterDraggedAndDroppedOnAnotherDay(state, action) {
+            state.newTopPositionForAppointmentAfterDragAndDroppedOnAnotherDay = action.payload
+        },
+        setIdOfAppointmentThatWillBeEdited(state, action) {
+            state.idOfAppointmentThatWillBeEdited = action.payload
+        },
+        setObjectThatContainsTheIdOfTheAppointmentThatWillBeEditedTheDayThatWasDroppedAtAndTheNewTopPosition(state, action) {
+            state.objectThatContainsTheIdOfTheAppointmentThatWillBeEditedTheDayThatWasDroppedAtAndTheNewTopPosition = action.payload
         }
+
     },
 });
 
 export const {
+    setObjectThatContainsTheIdOfTheAppointmentThatWillBeEditedTheDayThatWasDroppedAtAndTheNewTopPosition,
     setIsEditAppointmentSlideOverOpen,
     setAppointmentToEdit,
     setSelectedWorker,
     setIsAppointmentSlideOverOpen,
     setSelectedClient,
     setSelectedService,
-    setSelectedTime, setIsAddEventManuallyPressed,
+    setSelectedTime,
+    setIsAddEventManuallyPressed,
     setIndexOfDayThatWasPressed,
     setDayThatTheAppointmentWasDroppedAt,
-    setNewTopForAppointmentAfterDrag
+    setNewTopForAppointmentAfterDraggedAndDroppedOnAnotherDay,
+    setIdOfAppointmentThatWillBeEdited
 } = appointmentSlice.actions;
 
 export default appointmentSlice.reducer;
