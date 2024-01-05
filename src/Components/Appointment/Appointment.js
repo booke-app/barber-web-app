@@ -57,7 +57,7 @@ const Appointment = ({
     useEffect(() => {
         if (appointment._id === objectOfAppointmentToBeEdited?._id) {
             if (objectOfAppointmentToBeEdited.newTopForAppointment && objectOfAppointmentToBeEdited.dayThatTheAppointmentWasDroppedAt) {
-                editBooking(objectOfAppointmentToBeEdited.newTopForAppointment, objectOfAppointmentToBeEdited.dayThatTheAppointmentWasDroppedAt)
+                editBooking(objectOfAppointmentToBeEdited.newTopForAppointment, objectOfAppointmentToBeEdited.dayThatTheAppointmentWasDroppedAt, objectOfAppointmentToBeEdited.workerToHandle)
                 dispatch(setObjectThatContainsTheIdOfTheAppointmentThatWillBeEditedTheDayThatWasDroppedAtAndTheNewTopPosition(null))
             }
         }
@@ -65,7 +65,7 @@ const Appointment = ({
 
     }, [objectOfAppointmentToBeEdited])
 
-    const editBooking = async (manualTop, manualDate) => {
+    const editBooking = async (manualTop, manualDate, manualWorker) => {
         try {
             const response = await editReservation(
                 {
@@ -74,11 +74,15 @@ const Appointment = ({
                             firstName: appointment.clientData.firstName,
                             lastName: appointment.clientData.lastName
                         },
-                        workerData: {
+                        workerData: !manualWorker ? {
                             firstName: appointment.workerData.firstName,
                             lastName: appointment.workerData.lastName,
                             _id: appointment.workerData._id,
 
+                        } : {
+                            firstName: manualWorker.firstName,
+                            lastName: manualWorker.lastName,
+                            _id: manualWorker._id,
                         },
                         dateAndTime: {
                             when: (manualDate && manualTop) ? returnADateObjectInWhichTheYearMonthAndDayRemainTheSameButOnlyTheHoursAndMinutesChange(

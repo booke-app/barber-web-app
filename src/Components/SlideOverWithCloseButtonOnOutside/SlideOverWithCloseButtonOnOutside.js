@@ -25,7 +25,7 @@ export default function SlideOverWithCloseButtonOnOutside({
 
     return (
         <Transition.Root show={open} as={Fragment}>
-            <Dialog as="div" className="relative "
+            <Dialog as="div" className="relative  "
                     onClose={setOpen}>
                 <Transition.Child
                     as={Fragment}
@@ -37,10 +37,13 @@ export default function SlideOverWithCloseButtonOnOutside({
                     leaveTo="opacity-0"
                 >
                     <div
+                        style={{zIndex: 2}}
+
                         className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"/>
                 </Transition.Child>
 
                 <div
+                    style={{zIndex: 2}}
                     className="fixed  inset-0 overflow-hidden">
                     <div
                         className="absolute inset-0 overflow-hidden">

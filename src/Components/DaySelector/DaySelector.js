@@ -15,8 +15,8 @@ export default function DaySelector() {
     const selectedDate = useSelector(state => state.calendar.selectedDate)
     const dispatch = useDispatch()
     return (
-        <div
-            className="relative z-10 mr-4 flex items-center rounded-md bg-white shadow-sm md:items-stretch">
+        <div style={{zIndex: 1,}}
+             className="relative mr-4 flex items-center rounded-md bg-white shadow-sm md:items-stretch">
             <button
                 onClick={() => {
 

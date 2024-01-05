@@ -146,7 +146,8 @@ const Day = ({
                 {
                     _id: idOfAppointment,
                     dayThatTheAppointmentWasDroppedAt: dayjs(selectedDate).add(index, 'd').$d,
-                    newTopForAppointment: (y / 2) + (event.target.classList.value * 120)
+                    newTopForAppointment: (y / 2) + (event.target.classList.value * 120),
+                    workerToHandle: workerBasedOnTheIndexOfTheDay,
                 }
             ))
 
