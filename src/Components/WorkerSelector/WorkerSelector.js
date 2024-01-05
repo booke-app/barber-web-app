@@ -23,10 +23,11 @@ export default function WorkerSelector() {
 
     }, [workersFromShop]);
 
-    return (<Menu as="div" className=" mr-4 relative">
+    return (<Menu as="div"
+                  className=" w-full md:w-auto md:mr-4 relative">
             <Menu.Button
                 type="button"
-                className="flex items-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                className="w-full md:w-auto justify-between flex items-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
             >
                 {!numberOfMultipleWorkersShown ? selectedWorkerForWeekView?.firstName + ' ' + selectedWorkerForWeekView?.lastName :
                     numberOfMultipleWorkersShown === 2 ? 'Show 2 workers' :
@@ -47,7 +48,7 @@ export default function WorkerSelector() {
                 leaveTo="transform opacity-0 scale-95"
             >
                 <Menu.Items
-                    className="absolute right-0 z-10 mt-3 w-36 origin-top-right overflow-hidden rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    className="  w-full md:w-36 absolute right-0 z-10 mt-3  origin-top-right overflow-hidden rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1">
                         {workersFromShop?.map((worker, i) =>
                             <Menu.Item as='div'>

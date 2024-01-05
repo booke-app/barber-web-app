@@ -15,21 +15,17 @@ export default function DaySelector() {
     const selectedDate = useSelector(state => state.calendar.selectedDate)
     const dispatch = useDispatch()
     return (
-        <div style={{zIndex: 1,}}
-             className="relative mr-4 flex items-center rounded-md bg-white shadow-sm md:items-stretch">
+        <div style={{zIndex: 1, alignItems: "center"}}
+             className=" border rounded-md border-gray-300 w-full md:h-full md:w-auto relative md:mr-4 flex items-center rounded-md bg-white shadow-sm md:items-stretch">
             <button
                 onClick={() => {
 
-                    // if (!dayjs(dayjs(selectedDate).subtract(1, 'd')).isBefore(dayjs(Date.now()), 'day')) {
                     dispatch(setSelectedDate(dayjs(selectedDate).subtract(1, 'd')))
 
-                    // }
                 }}
                 type="button"
-                className="flex h-9 w-12 items-center justify-center rounded-l-md border-y border-l border-gray-300 pr-1 text-gray-400 hover:text-gray-500 focus:relative md:w-9 md:pr-0 md:hover:bg-gray-50"
+                className=" w-full   flex h-9 w-12 items-center justify-center   pr-1 text-gray-400 hover:text-gray-500 focus:relative md:w-9 md:pr-0 md:hover:bg-gray-50"
             >
-                <span
-                    className="sr-only">Previous week</span>
                 <ChevronLeftIcon className="h-5 w-5"
                                  aria-hidden="true"/>
             </button>
@@ -39,7 +35,7 @@ export default function DaySelector() {
                     textOverflow: "ellipsis",
                     whiteSpace: "nowrap"
                 }}
-                className="hidden border-y border-gray-300 px-3.5 text-sm font-semibold text-gray-900 hover:bg-gray-50 focus:relative md:block"
+                className="w-full h-full md:w-auto  px-3.5 text-sm font-semibold text-gray-900 hover:bg-gray-50 focus:relative md:block"
             >
                 <CalendarDropDown/>
             </button>
@@ -51,7 +47,7 @@ export default function DaySelector() {
 
                 }}
                 type="button"
-                className="flex h-9 w-12 items-center justify-center rounded-r-md border-y border-r border-gray-300 pl-1 text-gray-400 hover:text-gray-500 focus:relative md:w-9 md:pl-0 md:hover:bg-gray-50"
+                className="flex h-9 w-12 items-center justify-center  pl-1 text-gray-400 hover:text-gray-500 focus:relative md:w-9 md:pl-0 md:hover:bg-gray-50"
             >
                 <ChevronRightIcon className="h-5 w-5"
                                   aria-hidden="true"/>

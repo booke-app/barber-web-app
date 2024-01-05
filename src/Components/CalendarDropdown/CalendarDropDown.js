@@ -12,12 +12,18 @@ export function CalendarDropDown() {
     const dispatch = useDispatch()
     const selectedDate = useSelector(state => state.calendar.selectedDate)
     return (
-        <div className=" text-right">
+        <div style={{
+            alignItems: "center"
+        }} className="h-full w-full md:w-auto">
             <Menu as="div"
-                  className="  inline-block text-left">
+                  style={{
+                      alignItems: "center"
+                  }}
+                  className=" h-full flex justify-center text-left">
                 <div>
                     <Menu.Button
-                        className="inline-flex w-full justify-center rounded-md   text-sm font-medium  ">
+
+                        className="   inline-flex w-full justify-center rounded-md   text-sm font-medium  ">
                         {dayjs(Date.now()).isSame(selectedDate, 'd') && 'Today'}
                         {dayjs(Date.now()).add(1, 'd').isSame(selectedDate, 'd') && 'Tomorrow'}
                         {dayjs(Date.now()).subtract(1, 'd').isSame(selectedDate, 'd') && 'Yesterday'}
@@ -39,7 +45,7 @@ export function CalendarDropDown() {
                     leaveTo="transform opacity-0 scale-95"
                 >
                     <Menu.Items
-                        className="absolute   right-0 mt-3  origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
+                        className="absolute  top-0 right-0 mt-10  origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
                         <div className="px-1 py-1">
                             <Menu.Item>
                                 {({active}) => (

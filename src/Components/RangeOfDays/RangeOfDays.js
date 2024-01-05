@@ -5,25 +5,33 @@ import {ChevronDownIcon} from "@heroicons/react/20/solid";
 import {Fragment} from "react";
 import {classNames} from "../../Utilities/utilities";
 import {useDispatch, useSelector} from "react-redux";
-import {setTypeOfView} from "../../Features/typeOfView/typeOfView-slice";
+import {
+    setTypeOfView
+} from "../../Features/typeOfView/typeOfView-slice";
 
 const RangeOfDays = () => {
     // const selectedRangeOfDays = useSelector()
     const currentTypeOfView = useSelector(state => state.typeOfView.typeOfView)
     const dispatch = useDispatch()
 
-    const availableViews = [{type: 'weeklyView', name: 'Week view'},
+    const availableViews = [{
+        type: 'weeklyView',
+        name: 'Week view'
+    },
         {type: 'dayView', name: 'Day view'},
         {type: 'twoDayView', name: '2 Day view'},
         {type: 'threeDayView', name: '3 Day view'},
     ]
-    return (<Menu as="div" className="relative">
+    return (<Menu as="div"
+                  className="  relative w-full md:w-auto ">
             <Menu.Button
                 type="button"
-                className="flex mr-4 items-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                className="w-full justify-between md:items-center  md:w-auto flex md:mr-4  gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
             >
                 {availableViews.filter((view) => view.type === currentTypeOfView)?.[0]?.name}
-                <ChevronDownIcon className="-mr-1 h-5 w-5 text-gray-400" aria-hidden="true"/>
+                <ChevronDownIcon
+                    className="-mr-1 h-5 w-5 text-gray-400"
+                    aria-hidden="true"/>
             </Menu.Button>
 
             <Transition
@@ -36,7 +44,7 @@ const RangeOfDays = () => {
                 leaveTo="transform opacity-0 scale-95"
             >
                 <Menu.Items
-                    className="absolute right-0 z-10 mt-3 w-36 origin-top-right overflow-hidden rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    className=" w-full  md:w-auto md:w-36 absolute right-0 z-10 mt-3  origin-top-right overflow-hidden rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1">
                         {availableViews.map((view, index) =>
                             <Menu.Item key={index}>

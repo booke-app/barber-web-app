@@ -5,6 +5,7 @@ const initialState = {
     isGlobalLoading: false,
     height: window.screen.height,
     width: window.screen.width,
+    mobileCalendarSettingsSideBarOpen: false,
 };
 
 const UserInterfaceSlice = createSlice({
@@ -19,6 +20,9 @@ const UserInterfaceSlice = createSlice({
         },
         setScreenWidth(state, action) {
             state.width = action.payload
+        },
+        setIsMobileCalendarSettingsSideBarOpen(state, action) {
+            state.mobileCalendarSettingsSideBarOpen = action.payload
         }
 
 
@@ -27,6 +31,7 @@ const UserInterfaceSlice = createSlice({
 });
 
 export const {
+    setIsMobileCalendarSettingsSideBarOpen,
     setGlobalLoading, setScreenHeight, setScreenWidth
 } = UserInterfaceSlice.actions;
 

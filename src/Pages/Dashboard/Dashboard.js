@@ -14,6 +14,9 @@ import {
 import {
     EditAppointmentSlideOver
 } from "../../Components/EditAppointmentSlideOver/EditAppointmentSlideOver";
+import {
+    MobileCalendarSettingsSidebar
+} from "../../Components/MobileCalendarSettingsSidebar/MobileCalendarSettingsSidebar";
 
 
 const Dashboard = () => {
@@ -23,6 +26,7 @@ const Dashboard = () => {
 
     return (
         <>
+            <MobileCalendarSettingsSidebar/>
             <BookAppointmentSlideOver/>
             <EditAppointmentSlideOver/>
             {!numberOfMultipleWorkersShown && <>
