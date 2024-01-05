@@ -48,7 +48,6 @@ const EditService = ({
 
 
     useEffect(() => {
-        console.log(selectedServiceToBeEdited, 'serviceToBeedited')
 
         setServiceName(selectedServiceToBeEdited.name)
         setDuration(selectedServiceToBeEdited.duration)

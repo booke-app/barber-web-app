@@ -262,7 +262,6 @@ export default function ServicesPage() {
                                                 </td>
                                                 <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
                                                     <a onClick={() => {
-                                                        console.log(category)
                                                         setServiceToBeEdited({
                                                             ...service,
                                                             categoryId: category._id,
